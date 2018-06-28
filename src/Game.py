@@ -1,11 +1,9 @@
-import sys
-# sys.path.append("C:\\Users\\vkueb\\PycharmProjects\\intersys_led_air_hockey\\src")
-import Matrix
-import BresenhamsLineAlgorithm
+from Matrix import Matrix
+from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm as bla
 
 
 class Game:
     def __init__(self):
         self.matrix = Matrix()
-        self.bresenham = BresenhamsLineAlgorithm(self.matrix)
+        self.bresenham = bla(self.matrix)
 
