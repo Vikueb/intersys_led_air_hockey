@@ -48,6 +48,21 @@ class SolveCollision:
             axisY = 31
             axisX = mirrorX
 
+        if self.collisionX == 0 and self.collisionY == 0:
+            axisX = 0
+            axisY = 0
+
+        if self.collisionX == 63 and self.collisionY == 0:
+            axisX = 63
+            axisY = 0
+
+        if self.collisionX == 0 and self.collisionY == 31:
+            axisX = 0
+            axisY = 31
+
+        if self.collisionX == 63 and self.collisionY == 31:
+            axisX = 63
+            axisY = 31
         # mirror_point that we need
 
         dx_new = axisX - mirrorX
