@@ -1,15 +1,16 @@
 import random as random
+import RPi.GPIO as gpio
 
 
 class Matrix:
     # nodes define a 32 times 64 array array where x_Max is 32 and y_Max is 64
-    x_Max = 32
-    y_Max = 64
+    x_Max = 64
+    y_Max = 32
     board = []
     goal_player1 = []
     goal_player2 = []
 
-    def __init__(self):
+    def init(self):
         self.board = self.field()
         x_start = random.randint(16, 17)
         y_start = random.randint(32, 33)
@@ -32,6 +33,6 @@ class Matrix:
         x = 0
         y = 0
 
-        def __init__(self, x_value, y_value):
+        def init(self, x_value, y_value):
             self.x = x_value
             self.y = y_value
