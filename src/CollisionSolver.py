@@ -3,32 +3,32 @@ from Matrix import Matrix
 
 
 class SolveCollision:
-    previouspathtillcollision = []
+    previous_path_till_collision = []
     startX = 0
     startY = 0
     collisionX = 0
     collisionY = 0
     matrix = []
 
-    def __init__(self, matrix, previouspathtillcollision, start, collisionpoint):
+    def __init__(self, matrix, previous_path_till_collision, start, collision_point):
         self.startX = start.x
         self.startY = start.y
-        self.collisionX = collisionpoint.x
-        self.collisionY = collisionpoint.y
-        self.previouspathtillcollision = previouspathtillcollision
+        self.collisionX = collision_point.x
+        self.collisionY = collision_point.y
+        self.previous_path_till_collision = previous_path_till_collision
         self.matrix = matrix
 
-    def collisionsolver(self):
+    def collision_solver(self):
         # delta x&y
         dx = self.collisionX - self.startX
         dy = self.collisionY - self.startY
 
-        # mirrorpoint for help
+        # mirror_point for help
 
         mirrorX = self.collisionX + dx
         mirrorY = self.collisionY + dy
 
-        # Ponit on axis below mirrorpoint to generate new (true) mirrorpoint, which we need
+        # Point on axis below mirror_point to generate new (true) mirror_point, which we need
         axisX = 0
         axisY = 0
 
@@ -48,24 +48,24 @@ class SolveCollision:
             axisY = 31
             axisX = mirrorX
 
-        # mirrorpoint that we need
+        # mirror_point that we need
 
-        dxnew = axisX - mirrorX
-        dynew = axisY - mirrorY
+        dx_new = axisX - mirrorX
+        dy_new = axisY - mirrorY
 
-        truemirrorX = axisX + dxnew
-        truemirrorY = axisY + dynew
+        true_mirror_X = axisX + dx_new
+        true_mirror_Y = axisY + dy_new
 
-        # append new path from collisionpoint till truemirrorpoint to previouspath
-        pixelcollision = Matrix.Pixel(self.collisionX, self.collisionY)
-        truemirrorpixel = Matrix.Pixel(truemirrorX, truemirrorY)
-        bresen = BresenhamsLineAlgorithm(self.matrix)
-        newpath = bresen.calculate(pixelcollision, truemirrorpixel)
+        # append new path from collision_point till true_mirror_point to previous_path_till_collision
+        pixel_collision = Matrix.Pixel(self.collisionX, self.collisionY)
+        true_mirror_pixel = Matrix.Pixel(true_mirror_X, true_mirror_Y)
+        bresenham = BresenhamsLineAlgorithm(self.matrix)
+        new_path = bresenham.calculate(pixel_collision, true_mirror_pixel)
 
         # drop first element, which is the wall
-        newpath.pop(0)
+        new_path.pop(0)
 
         # now append both paths and return them
-        a = self.previouspathtillcollision.append(newpath)
+        a = self.previous_path_till_collision.append(new_path)
 
         return a
