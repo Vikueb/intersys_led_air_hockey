@@ -25,51 +25,51 @@ class SolveCollision:
 
         # mirror_point for help
 
-        mirrorX = self.collisionX + dx
-        mirrorY = self.collisionY + dy
+        mirror_x = self.collisionX + dx
+        mirror_y = self.collisionY + dy
 
         # Point on axis below mirror_point to generate new (true) mirror_point, which we need
-        axisX = 0
-        axisY = 0
+        axis_x = 0
+        axis_y = 0
 
         if self.collisionX == 0:
-            axisX = 0
-            axisY = mirrorY
+            axis_x = 0
+            axis_y = mirror_y
 
         if self.collisionX == 63:
-            axisX = 63
-            axisY = mirrorY
+            axis_x = 63
+            axis_y = mirror_y
 
         if self.collisionY == 0:
-            axisY = 0
-            axisX = mirrorX
+            axis_y = 0
+            axis_x = mirror_x
 
         if self.collisionY == 31:
-            axisY = 31
-            axisX = mirrorX
+            axis_y = 31
+            axis_x = mirror_x
 
         if self.collisionX == 0 and self.collisionY == 0:
-            axisX = 0
-            axisY = 0
+            axis_x = 0
+            axis_y = 0
 
         if self.collisionX == 63 and self.collisionY == 0:
-            axisX = 63
-            axisY = 0
+            axis_x = 63
+            axis_y = 0
 
         if self.collisionX == 0 and self.collisionY == 31:
-            axisX = 0
-            axisY = 31
+            axis_x = 0
+            axis_y = 31
 
         if self.collisionX == 63 and self.collisionY == 31:
-            axisX = 63
-            axisY = 31
+            axis_x = 63
+            axis_y = 31
         # mirror_point that we need
 
-        dx_new = axisX - mirrorX
-        dy_new = axisY - mirrorY
+        dx_new = axis_x - mirror_x
+        dy_new = axis_y - mirror_y
 
-        true_mirror_X = axisX + dx_new
-        true_mirror_Y = axisY + dy_new
+        true_mirror_X = axis_x + dx_new
+        true_mirror_Y = axis_y + dy_new
 
         # append new path from collision_point till true_mirror_point to previous_path_till_collision
         pixel_collision = Matrix.Pixel(self.collisionX, self.collisionY)
