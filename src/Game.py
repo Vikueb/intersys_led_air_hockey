@@ -19,7 +19,7 @@ class Game:
         self.setup_gpio()
         self.camera = PiCamera()
         # saving the picture to an in-program stream rather than a file
-        self.stream = io.BytesIO()
+        self.stream = io.StringIO()
         self.standby()
 
     @staticmethod
@@ -58,7 +58,7 @@ class Game:
         left = cv2.cvtColor(left, cv2.COLOR_BGR2HSV)
         right = cv2.cvtColor(right, cv2.COLOR_BGR2HSV)
 
-        # Defining the red color range and calculating if these values lie in the range
+        # Defining the skin color range and calculating if these values lie in that
         red_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
         red_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
         # binarize
