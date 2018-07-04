@@ -1,5 +1,5 @@
 import random as random
-import RPi.GPIO as gpio
+# import RPi.GPIO as gpio
 
 
 class Matrix:
@@ -7,10 +7,11 @@ class Matrix:
     x_Max = 64
     y_Max = 32
     board = []
+    start = None
     goal_player1 = []
     goal_player2 = []
 
-    def init(self):
+    def __init__(self):
         self.board = self.field()
         x_start = random.randint(16, 17)
         y_start = random.randint(32, 33)
@@ -23,7 +24,7 @@ class Matrix:
         for y in range(self.y_Max):
             new_line = []
             for x in range(self.x_Max):
-                new_line.append((self.Pixel(x, y)))
+                new_line.append(self.Pixel(x, y))
 
             field.append(new_line)
 
@@ -33,6 +34,6 @@ class Matrix:
         x = 0
         y = 0
 
-        def init(self, x_value, y_value):
+        def __init__(self, x_value, y_value):
             self.x = x_value
             self.y = y_value

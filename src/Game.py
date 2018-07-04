@@ -3,7 +3,10 @@ from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm as Bla
 
 
 class Game:
-    def init(self):
+    bresenham = None
+    matrix = None
+
+    def __init__(self):
         self.matrix = Matrix()
         self.bresenham = Bla(self.matrix)
         self.setup_gpio()
