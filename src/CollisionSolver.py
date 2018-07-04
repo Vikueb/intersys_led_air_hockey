@@ -68,12 +68,12 @@ class SolveCollision:
         dx_new = axis_x - mirror_x
         dy_new = axis_y - mirror_y
 
-        true_mirror_X = axis_x + dx_new
-        true_mirror_Y = axis_y + dy_new
+        true_mirror_x = axis_x + dx_new
+        true_mirror_y = axis_y + dy_new
 
         # append new path from collision_point till true_mirror_point to previous_path_till_collision
         pixel_collision = Matrix.Pixel(self.collisionX, self.collisionY)
-        true_mirror_pixel = Matrix.Pixel(true_mirror_X, true_mirror_Y)
+        true_mirror_pixel = Matrix.Pixel(true_mirror_x, true_mirror_y)
         bresenham = BresenhamsLineAlgorithm(self.matrix)
         new_path = bresenham.calculate(pixel_collision, true_mirror_pixel)
 

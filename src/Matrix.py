@@ -1,4 +1,4 @@
-import random as random
+from Ball import Ball
 # import RPi.GPIO as gpio
 
 
@@ -7,15 +7,13 @@ class Matrix:
     x_Max = 64
     y_Max = 32
     board = []
-    start = None
+    ball = None
     goal_player1 = []
     goal_player2 = []
 
     def __init__(self):
         self.board = self.field()
-        x_start = random.randint(16, 17)
-        y_start = random.randint(32, 33)
-        self.start = self.Pixel(x_start, y_start)
+        self.ball = Ball()
 
         return
 
@@ -24,16 +22,22 @@ class Matrix:
         for y in range(self.y_Max):
             new_line = []
             for x in range(self.x_Max):
-                new_line.append(self.Pixel(x, y))
+                new_line.append(Pixel(x, y))
 
             field.append(new_line)
 
         return field
 
-    class Pixel:
-        x = 0
-        y = 0
+    def draw(self):
+        # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
+        # https://github.com/hzeller/rpi-rgb-led-matrix
+        pass
 
-        def __init__(self, x_value, y_value):
-            self.x = x_value
-            self.y = y_value
+
+class Pixel:
+    x = 0
+    y = 0
+
+    def __init__(self, x_value, y_value):
+        self.x = x_value
+        self.y = y_value
