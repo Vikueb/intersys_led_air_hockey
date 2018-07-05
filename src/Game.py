@@ -26,7 +26,7 @@ class Game:
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
-        self.ball = Ball()
+        self.ball = Ball(self.matrix)
         self.wins = False
 
         self.usage()
