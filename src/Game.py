@@ -7,12 +7,22 @@ from RPi.GPIO import GPIO
 from picamera import PiCamera
 import numpy as np
 import io
+import argparse
+# import sys
+
+# sys.path.append('lib/rpi-rgb-led-matrix-master/bindings/python/rgbmatrix')
+# from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
 
 class Game:
 
     def __init__(self):
-        self.matrix = Matrix()
+        self.parser = argparse.ArgumentParser()
+
+        self.parser.add_argument("-r", "--led-rows", action="store", help="Panel rows.", default=32, type=int)
+        self.parser.add_argument("--led-cols", action="store", help="Panel columns.", default=64, type=int)
+
+        self.matrix = Matrix(self.parser)
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
@@ -29,6 +39,7 @@ class Game:
         self.stream = io.StringIO()
         self.standby()
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def setup_gpio(self):
         # pin setup for matrix
         # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
@@ -43,6 +54,47 @@ class Game:
         GPIO.setup(self.exit_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
+    def standby(self):
+        # just light the edges of the matrix
+        # until start button is pushed
+        while not GPIO.input(self.start_button):
+            self.matrix.draw_standby()
+
+        # then register players
+        while True:
+            # try to register again
+            if not self.register_players():
+                break
+            # show standby again
+            self.matrix.draw_standby()
+
+        return
+
+# ---------------------------------------------------------------------------------------------------------------- #
+    def loop(self):
+        # keep playing until somebody wins
+        while not self.winner:
+            # keep playing until exit button or stop button are pressed
+            if GPIO.input(self.exit_button):
+                print("The Game is being turned off because you hit the exit button!\n")
+                exit()
+            else:
+                if GPIO.input(self.start_button):
+                    print("returning to standby mode because the stop button was pressed!\n")
+                    return
+
+            # where are the hands of the players?
+            self.take_and_process_picture()
+
+            # let ball roll
+            self.move_ball()
+
+            self.display_board()
+
+        return
+
+# ---------------------------------------------------------------------------------------------------------------- #
     def take_and_process_picture(self):
         player1_reg = False
         player2_reg = False
@@ -119,22 +171,7 @@ class Game:
 
         return player1_reg & player2_reg
 
-    def standby(self):
-        # just light the edges of the matrix
-        # until start button is pushed
-        while not GPIO.input(self.start_button):
-            self.matrix.draw_standby()
-
-        # then register players
-        while True:
-            # try to register again
-            if not self.register_players():
-                break
-            # show standby again
-            self.matrix.draw_standby()
-
-        return
-
+# ---------------------------------------------------------------------------------------------------------------- #
     def register_players(self):
         # display Text:
         #                  Put your hand
@@ -155,14 +192,18 @@ class Game:
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def goal(self, identity):
         # add point to score of the player who scored
         if identity == 1:
             self.player1.score += 1
+            print("player 1 scored a goal")
         else:
             self.player2.score += 1
+            print("player 2 scored a goal")
 
         # display Score on each side of the field
+        print(self.player1.score + " : " + self.player2.score)
 
         # if score of one player is 10 he wins
         if self.player1.score == 10:
@@ -175,6 +216,7 @@ class Game:
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def winner(self, identity):
         # display Text "WINNER" on the field side of the winner
         # and display Text "LOOSER" on the looser's side
@@ -182,39 +224,32 @@ class Game:
         print("Player " + identity + " wins!\n")
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
+    def display_board(self):
+        self.matrix.draw_goals()                        # red
+
+        self.matrix.draw_line_horizontal(0, 63, 0)      # green     outer line
+        self.matrix.draw_line_horizontal(0, 63, 31)     # green
+        self.matrix.draw_line_vertical(0, 0, 11)        # green
+        self.matrix.draw_line_vertical(0, 20, 31)       # green
+        self.matrix.draw_line_vertical(63, 0, 11)       # green
+        self.matrix.draw_line_vertical(63, 20, 31)      # green
+
+        self.matrix.draw_line_vertical(31, 0, 11)       # green     middle line
+        self.matrix.draw_line_vertical(31, 20, 31)      # green
+
+        self.matrix.draw_circle(31, 16, 5)
+
+        return
+
+# ---------------------------------------------------------------------------------------------------------------- #
     def get_player_score(self, identity):
         if identity == 1:
             return self.player1.score
         else:
             return self.player2.score
 
-    def loop(self):
-        # keep playing until somebody wins
-        while not self.winner:
-            # let ball roll
-            self.move_ball()
-            # keep playing until exit button or stop button are pressed
-            if GPIO.input(self.exit_button):
-                print("The Game is being turned off because you hit the exit button!\n")
-                exit()
-            else:
-                if GPIO.input(self.start_button):
-                    print("returning to standby mode because the stop button was pressed!\n")
-                    return
-
-            # where are the hands of the players?
-            self.take_and_process_picture()
-
-            # let ball roll again
-            self.move_ball()
-
-            # if ball is on goal, call goal()
-
-            # is there a collision of hands and ball?
-            # recalculate ball path if len(path) < 10
-
-        return
-
+# ---------------------------------------------------------------------------------------------------------------- #
     def move_ball(self):
         self.ball.move()
         # goal?
@@ -222,20 +257,23 @@ class Game:
         if goal != -1:
             self.goal(goal)
 
-        # hit
+        # hit?
         if self.player1.x == self.ball.x & self.player1.y == self.ball.y:
             self.ball.calculate_path()
+            print("player 1 hit the ball")
         if self.player2.x == self.ball.x & self.player2.y == self.ball.y:
             self.ball.calculate_path()
+            print("player 2 hit the ball")
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     @staticmethod
     def usage():
         print("\n")
         print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS  \n")
         print("**********************************************\n")
-        print("    Copyright 2017 by Vincent Kübler,         \n")
+        print("    Copyright 2018 by Vincent Kübler,         \n")
         print("    Kora Regitz, Betim Sulejmani and          \n")
         print("    Mehmood UI Hassan.                        \n")
         print("    Students of Computer Science              \n")

@@ -1,4 +1,3 @@
-from Ball import Ball
 import numpy as np
 import RPi.GPIO as GPIO
 
@@ -12,11 +11,18 @@ class Matrix:
     goal_player1 = (0, np.arange(12, 20, 1))
     goal_player2 = (63, np.arange(12, 20, 1))
 
-    def __init__(self):
+# ---------------------------------------------------------------------------------------------------------------- #
+    def __init__(self, parser):
+        self.args = parser.parse_args()
+
+        # options = RGBMatrixOptions()
         self.board = self.field()
+
+        # self.matrix = RGBMatrix(options = options)
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def field(self):
         field = []
         for y in range(self.y_Max):
@@ -28,12 +34,14 @@ class Matrix:
 
         return field
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def draw_pixel(self, x, y):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def draw_line_vertical(self, x, y_down, y_up):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
@@ -43,6 +51,7 @@ class Matrix:
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def draw_line_horizontal(self, x_left, x_right, y):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
@@ -52,6 +61,7 @@ class Matrix:
 
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def draw_goals(self):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
@@ -59,13 +69,24 @@ class Matrix:
         self.draw_line_vertical(63, self.goal_player2[1][0], self.goal_player2[1][len(self.goal_player2[1]-1)])
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
     def draw_standby(self):
+        # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
+        # https://github.com/hzeller/rpi-rgb-led-matrix
         self.draw_line_vertical(0, 0, 31)
         self.draw_line_vertical(63, 0, 31)
         self.draw_line_horizontal(0, 63, 0)
         self.draw_line_horizontal(0, 63, 31)
         return
 
+# ---------------------------------------------------------------------------------------------------------------- #
+    def draw_circle(self, x_middle, y_middle, radius):
+        # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
+        # https://github.com/hzeller/rpi-rgb-led-matrix
+
+        return
+
+# ---------------------------------------------------------------------------------------------------------------- #
     def is_goal(self, x, y):
         if x == 0:
             if y == (g for g in self.goal_player1[1]):
@@ -76,6 +97,8 @@ class Matrix:
                     return 0
 
         return -1
+
+# ---------------------------------------------------------------------------------------------------------------- #
 
 
 class Pixel:
