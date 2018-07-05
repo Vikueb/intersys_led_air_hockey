@@ -1,6 +1,7 @@
 from Matrix import Matrix
 from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm as Bla
 from Player import Player
+from Ball import Ball
 import cv2
 from RPi.GPIO import GPIO
 from picamera import PiCamera
@@ -15,16 +16,21 @@ class Game:
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
+        self.ball = Ball()
+        self.wins = False
 
+        self.usage()
+
+        self.start_button = 16
+        self.exit_button = 20
         self.setup_gpio()
         self.camera = PiCamera()
         # saving the picture to an in-program stream rather than a file
         self.stream = io.StringIO()
         self.standby()
 
-    @staticmethod
-    def setup_gpio():
-        # pin setup
+    def setup_gpio(self):
+        # pin setup for matrix
         # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
         GPIO.cleanup()
         GPIO.setmode(GPIO.BOARD)
@@ -32,7 +38,10 @@ class Game:
         for p in pins:
             GPIO.setup(p, GPIO.OUT)
 
-        pass
+        # pin setup for buttons
+        GPIO.setup(self.start_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.exit_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        return
 
     def take_and_process_picture(self):
         # code oriented at:
@@ -104,16 +113,14 @@ class Game:
         else:
             print("player 2 not detected.")
 
-        pass
+        return
 
-    @staticmethod
-    def standby():
+    def standby(self):
         # just light the edges of the matrix
         # until start button is pushed
         # then register players
-        pass
+        return
 
-    @staticmethod
     def register_players(self):
         # display Text:
         #                     Please
@@ -130,9 +137,77 @@ class Game:
         #                  \          /
         #                   \________/
 
-        pass
+        return
+
+    def goal(self, identity):
+        # add point to score of the player who scored
+        if identity == 1:
+            self.player1.score += 1
+        else:
+            self.player2.score += 1
+
+        # display Score on each side of the field
+
+        # if score of one player is 10 he wins
+        if self.player1.score == 10:
+            self.winner(1)
+            self.wins = True
+        else:
+            if self.player2.score == 10:
+                self.winner(2)
+                self.wins = True
+
+        return
+
+    def winner(self, identity):
+        # display Text "WINNER" on the field side of the winner
+        # and display Text "LOOSER" on the looser's side
+
+        print("Player " + identity + " wins!\n")
+        return
+
+    def get_player_score(self, identity):
+        if identity == 1:
+            return self.player1.score
+        else:
+            return self.player2.score
 
     def loop(self):
-        # loop
+        # keep playing until somebody wins
+        while not self.winner:
+            # let ball roll
+            self.matrix.run_ball(self.ball.x, self.ball.y)
+            # keep playing until exit button or stop button are pressed
+            if GPIO.input(self.exit_button):
+                print("The Game is being turned off because you hit the exit button!\n")
+                exit()
+            else:
+                if GPIO.input(self.start_button):
+                    print("returning to standby mode because the stop button was pressed!\n")
+                    return
 
-        pass
+            # where are the hands of the players?
+            self.take_and_process_picture()
+
+            # where is the ball?
+            # if ball is on goal, call goal()
+
+            # is there a collision of hands and ball?
+            # recalculate ball path if len(path) < 10
+
+        return
+
+    @staticmethod
+    def usage():
+        print("\n")
+        print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS     \n")
+        print("********************************************     \n")
+        print("    Copyright 2017 by Vincent Kübler,            \n")
+        print("    Kora Regitz, Betim Sulejmani and             \n")
+        print("    Mehmood UI Hassan.                           \n")
+        print("    Students of Computer Science                 \n")
+        print("    Saarland University, Saarbruecken, Germany   \n")
+        print("    All rights reserved. Unauthorised usage,     \n")
+        print("    copying, hiring, and selling prohibited.     \n")
+        print("*************************************************\n\n")
+        return
