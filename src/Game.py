@@ -44,6 +44,8 @@ class Game:
         return
 
     def take_and_process_picture(self):
+        player1_reg = False
+        player2_reg = False
         # code oriented at:
         # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
@@ -101,6 +103,7 @@ class Game:
             x = int(middle["m10"] / middle["m00"])
             y = int(middle["m01"] / middle["m00"])
             self.player1.set_position(x, y)
+            player1_reg = True
         else:
             print("player 1 not detected.")
 
@@ -110,32 +113,45 @@ class Game:
             x = int(middle["m10"] / middle["m00"])
             y = int(middle["m01"] / middle["m00"])
             self.player1.set_position(x, y)
+            player2_reg = True
         else:
             print("player 2 not detected.")
 
-        return
+        return player1_reg & player2_reg
 
     def standby(self):
         # just light the edges of the matrix
         # until start button is pushed
+        while not GPIO.input(self.start_button):
+            self.matrix.draw_standby()
+
         # then register players
+        while True:
+            # try to register again
+            if not self.register_players():
+                break
+            # show standby again
+            self.matrix.draw_standby()
+
         return
 
     def register_players(self):
         # display Text:
-        #                     Please
-        #                  put your hands
+        #                  Put your hand
         #                      here.
         #
         #                        _
-        #                     _  /\ _
-        #                  _ / \| |/ \
-        #                 / \| || || |  _
+        #                     _ | | _
+        #                  _ | || || |
+        #                 | || || || |  _
         #                 | || || || | / /
         #                 |          |/ /
         #                 \            /
         #                  \          /
         #                   \________/
+
+        # then let the camera catch them
+        self.take_and_process_picture()
 
         return
 
@@ -176,7 +192,7 @@ class Game:
         # keep playing until somebody wins
         while not self.winner:
             # let ball roll
-            self.matrix.run_ball(self.ball.x, self.ball.y)
+            self.move_ball()
             # keep playing until exit button or stop button are pressed
             if GPIO.input(self.exit_button):
                 print("The Game is being turned off because you hit the exit button!\n")
@@ -189,7 +205,9 @@ class Game:
             # where are the hands of the players?
             self.take_and_process_picture()
 
-            # where is the ball?
+            # let ball roll again
+            self.move_ball()
+
             # if ball is on goal, call goal()
 
             # is there a collision of hands and ball?
@@ -197,17 +215,32 @@ class Game:
 
         return
 
+    def move_ball(self):
+        self.ball.move()
+        # goal?
+        goal = self.matrix.is_goal(self.ball.x, self.ball.y)
+        if goal != -1:
+            self.goal(goal)
+
+        # hit
+        if self.player1.x == self.ball.x & self.player1.y == self.ball.y:
+            self.ball.calculate_path()
+        if self.player2.x == self.ball.x & self.player2.y == self.ball.y:
+            self.ball.calculate_path()
+
+        return
+
     @staticmethod
     def usage():
         print("\n")
-        print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS     \n")
-        print("********************************************     \n")
-        print("    Copyright 2017 by Vincent Kübler,            \n")
-        print("    Kora Regitz, Betim Sulejmani and             \n")
-        print("    Mehmood UI Hassan.                           \n")
-        print("    Students of Computer Science                 \n")
-        print("    Saarland University, Saarbruecken, Germany   \n")
-        print("    All rights reserved. Unauthorised usage,     \n")
-        print("    copying, hiring, and selling prohibited.     \n")
-        print("*************************************************\n\n")
+        print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS  \n")
+        print("**********************************************\n")
+        print("    Copyright 2017 by Vincent Kübler,         \n")
+        print("    Kora Regitz, Betim Sulejmani and          \n")
+        print("    Mehmood UI Hassan.                        \n")
+        print("    Students of Computer Science              \n")
+        print("    Saarland University, Saarbruecken, Germany\n")
+        print("    All rights reserved. Unauthorised usage,  \n")
+        print("    copying, hiring, and selling prohibited.  \n")
+        print("**********************************************\n\n")
         return

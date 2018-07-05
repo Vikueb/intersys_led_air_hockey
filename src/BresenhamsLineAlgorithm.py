@@ -5,7 +5,7 @@ class BresenhamsLineAlgorithm:
         self.max_x = len(matrix)
         self.max_y = len(matrix[0])
 
-    def calculate(self, start_pixel, end_pixel, player1, player2):
+    def calculate(self, start_pixel, end_pixel):
         path = []
         start_x = start_pixel.x
         start_y = start_pixel.y
@@ -40,7 +40,7 @@ class BresenhamsLineAlgorithm:
             if dx > 0:
                 # startpoint is further right than endpoint
                 for p in range(start_x - end_x):
-                    if self.out_of_range(start_x - p, start_y, player1, player2):
+                    if self.out_of_range(start_x - p, start_y):
                         return path
                     path.append(self.matrix[start_x - p][start_y])
             else:
@@ -115,12 +115,5 @@ class BresenhamsLineAlgorithm:
                                 err -= 1
             return path
 
-    def out_of_range(self, x, y, p1, p2):
-        wall = x < 0 | y < 0 | x > self.max_x | y > self.max_y
-        player1 = x == (p1.position[0].x | p1.position[1].x | p1.position[2].x | p1.position[3].x)
-        player1 = player1 & y == (p1.position[0].y | p1.position[1].y | p1.position[2].y | p1.position[3].y)
-
-        player2 = x == (p1.position[0].x | p1.position[1].x | p1.position[2].x | p1.position[3].x)
-        player2 = player2 & y == (p1.position[0].y | p1.position[1].y | p1.position[2].y | p1.position[3].y)
-
-        return wall | player1 | player2
+    def out_of_range(self, x, y):
+        return x < 0 | y < 0 | x > self.max_x | y > self.max_y
