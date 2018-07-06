@@ -290,7 +290,7 @@ class Game:
         print("\n")
         print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS  \n")
         print("**********************************************\n")
-        print("    Copyright 2018 by Vincent Kübler,         \n")
+        print("    Copyright 2018 by Vincent Kuebler,        \n")
         print("    Kora Regitz, Betim Sulejmani and          \n")
         print("    Mehmood UI Hassan.                        \n")
         print("    Students of Computer Science              \n")
