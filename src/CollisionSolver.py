@@ -24,11 +24,15 @@ class CollisionSolver:
         self.collision_x = collision_x
         self.collision_y = collision_y
 
-        if x_or_y == 'x':
-            mirror_x, mirror_y = self.collision_on_x_axis()
+        if not self.corner():
+            if x_or_y == 'x':
+                mirror_x, mirror_y = self.collision_on_x_axis()
+            else:
+                # y is the collision axis
+                mirror_x, mirror_y = self.collision_on_y_axis()
         else:
-            # y is the collision axis
-            mirror_x, mirror_y = self.collision_on_y_axis()
+            mirror_x = start_x
+            mirror_y = start_y
 
         # calculate new path from collision_point to mirror_point
         new_path = self.bresenham.calculate(self.collision_x, self.collision_y, mirror_x, mirror_y)
@@ -40,6 +44,15 @@ class CollisionSolver:
         path = path + new_path
 
         return path
+
+# ---------------------------------------------------------------------------------------------------------------- #
+    def corner(self):
+        left_upper = self.collision_x == 0 | self.collision_y == 0
+        left_lower = self.collision_x == 0 | self.collision_y == 31
+        right_upper = self.collision_x == 63 | self.collision_y == 0
+        right_lower = self.collision_x == 63 | self.collision_y == 31
+
+        return left_upper | left_lower | right_upper | right_lower
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def collision_on_y_axis(self):
