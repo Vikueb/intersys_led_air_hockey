@@ -31,6 +31,7 @@ class Game:
         # let the game begin!
         while not GPIO.input(self.exit_button):
             self.standby()
+            print("entering game mode now!")
             self.loop()
 
         return
@@ -54,7 +55,7 @@ class Game:
     def standby(self):
         # just light the edges of the matrix
         # until start button is pushed
-        while not GPIO.input(self.start_button):
+        while not GPIO.input(self.start_button) == 1:
             print("standby\n")
             self.matrix.draw_standby()
 
@@ -71,11 +72,11 @@ class Game:
         # keep playing until somebody wins
         while not self.wins:
             # keep playing until exit button or stop button are pressed
-            if GPIO.input(self.exit_button):
+            if GPIO.input(self.exit_button) == 1:
                 print("The Game is being turned off because you hit the exit button!\n")
                 exit()
             else:
-                if GPIO.input(self.start_button):
+                if GPIO.input(self.start_button) == 1:
                     print("returning to standby mode because the stop button was pressed!\n")
                     return
 
