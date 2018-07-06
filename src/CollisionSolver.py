@@ -1,9 +1,8 @@
 from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm
-from Matrix import Pixel
 import math
 
 
-class SolveCollision:
+class CollisionSolver:
 
     def __init__(self):
         self.start_x = 0
@@ -14,14 +13,18 @@ class SolveCollision:
         self.bresenham = BresenhamsLineAlgorithm(self.matrix)
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def collision_solver(self, matrix, start, path, collision_point, x_or_y):
-        self.start_x = start.x
-        self.start_y = start.y
-        self.collision_x = collision_point.x
-        self.collision_y = collision_point.y
-        self.matrix = matrix
+    def solve_collision(self, start_x, start_y, path, collision_x, collision_y, x_or_y):
 
-        if x_or_y == "x":
+        # to not diverge, keeping looks in the future short
+        if len(path) > 10:
+            return
+
+        self.start_x = start_x
+        self.start_y = start_y
+        self.collision_x = collision_x
+        self.collision_y = collision_y
+
+        if x_or_y == 'x':
             mirror_x, mirror_y = self.collision_on_x_axis()
         else:
             # y is the collision axis

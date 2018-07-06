@@ -84,13 +84,19 @@ class Game:
                     print("returning to standby mode because the stop button was pressed!\n")
                     return
 
-            # where are the hands of the players?
-            self.take_and_process_picture()
-
             # let ball roll
             self.move_ball()
 
             self.display_board()
+
+            # where are the hands of the players?
+            self.take_and_process_picture()
+
+            for i in range(4):
+                # let ball roll
+                self.move_ball()
+
+                self.display_board()
 
         return
 

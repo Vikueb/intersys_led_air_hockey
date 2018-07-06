@@ -1,6 +1,10 @@
+from CollisionSolver import CollisionSolver
+
+
 class BresenhamsLineAlgorithm:
 
     def __init__(self, matrix):
+        self.cs = CollisionSolver()
         self.matrix = matrix
         self.max_x = len(matrix)
         self.max_y = len(matrix[0])
@@ -21,14 +25,14 @@ class BresenhamsLineAlgorithm:
                 # startpoint is higher as endpoint
                 for p in range(start_y - end_y):
                     if self.out_of_range(start_x, start_y - p):
-                        return path
+                        return self.cs.solve_collision(start_x, start_y, path, start_x, start_y - p, 'x')
                     path.append(self.matrix[start_x][start_y - p])
             else:
                 if dy < 0:
                     # startpoint is lower as endpoint
                     for p in range(abs(start_y - end_y)):
                         if self.out_of_range(start_x, start_y + p):
-                            return path
+                            return self.cs.solve_collision(start_x, start_y, path, start_x, start_y + p, 'x')
                         path.append(self.matrix[start_x][start_y + p])
             return path
 
@@ -37,14 +41,14 @@ class BresenhamsLineAlgorithm:
                 # startpoint is further right than endpoint
                 for p in range(start_x - end_x):
                     if self.out_of_range(start_x - p, start_y):
-                        return path
+                        return self.cs.solve_collision(start_x, start_y, path, start_x - p, start_y, 'y')
                     path.append(self.matrix[start_x - p][start_y])
             else:
                 if dx < 0:
                     # startpoint is further left than endpoint
                     for p in range(abs(start_x - end_x)):
                         if self.out_of_range(start_x + p, start_y):
-                            return path
+                            return self.cs.solve_collision(start_x, start_y, path, start_x + p, start_y, 'y')
                         path.append(self.matrix[start_x + p][start_y])
             return path
 
@@ -57,7 +61,7 @@ class BresenhamsLineAlgorithm:
                 if dx < 0:
                     for p in range(abs(start_x - end_x)):
                         if self.out_of_range(start_x + p, y):
-                            return path
+                            return self.cs.solve_collision(start_x, start_y, path, start_x + p, y, 'y')
                         path.append(self.matrix[start_x + p][y])
                         err += derr
                         if err >= half:
@@ -71,7 +75,7 @@ class BresenhamsLineAlgorithm:
                     if dx > 0:
                         for p in range(start_x - end_x):
                             if self.out_of_range(start_x - p, y):
-                                return path
+                                return self.cs.solve_collision(start_x, start_y, path, start_x - p, y, 'y')
                             path.append(self.matrix[start_x - p][y])
                             err += derr
                             if err >= half:
@@ -87,7 +91,7 @@ class BresenhamsLineAlgorithm:
                 if dy < 0:
                     for p in range(abs(start_y - end_y)):
                         if self.out_of_range(x, start_y + p):
-                            return path
+                            return self.cs.solve_collision(start_x, start_y, path, x, start_y + p, 'x')
                         path.append(self.matrix[x][start_y + p])
                         err += derr
                         if err >= half:
@@ -100,7 +104,7 @@ class BresenhamsLineAlgorithm:
                     if dy > 0:
                         for p in range(start_y - end_y):
                             if self.out_of_range(x, start_y - p):
-                                return path
+                                return self.cs.solve_collision(start_x, start_y, path, x, start_y - p, 'x')
                             path.append(self.matrix[x][start_y - p])
                             err += derr
                             if err >= half:
