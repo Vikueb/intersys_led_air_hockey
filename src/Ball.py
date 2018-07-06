@@ -57,30 +57,29 @@ class Ball:
 # ---------------------------------------------------------------------------------------------------------------- #
     def calculate_path(self):
         # simulates the future movement of the ball
+        # update path
         units = 10
         x = self.x + int(math.sin(math.radians(self.direction))) * units
         y = self.y + int(math.cos(math.radians(self.direction))) * units
-        pixel_start = Pixel(self.x, self.y)
-        pixel_end = Pixel(x, y)
 
+        self.path = self.bresenham.calculate(self.x, self.y, x, y)
+
+        # update degrees
         dx = self.x - x
         dy = self.y - y
         h = math.sqrt(dx**2 + dy**2)
 
-        # update degrees
         if dx < 0 & dy < 0:
-            self.direction = 0 + math.degrees(math.acos(math.fabs(dx) / h))
+            self.direction = 270 + math.degrees(math.acos(math.fabs(dx) / h))
         else:
             if dx < 0 & dy >= 0:
-                self.direction = 270 + math.degrees(math.acos(dy / h))
+                self.direction = 0 + math.degrees(math.acos(dy / h))
             else:
                 if dx >= 0 & dy < 0:
-                    self.direction = 90 + math.degrees(math.acos(math.fabs(dy) / h))
+                    self.direction = 180 + math.degrees(math.acos(math.fabs(dy) / h))
                 else:
                     # if dx >= 0 &  dy >= 0:
-                    self.direction = 180 + math.degrees(math.acos(math.fabs(dx) / h))
-
-        self.path = self.bresenham.calculate(pixel_start, pixel_end)
+                    self.direction = 90 + math.degrees(math.acos(math.fabs(dx) / h))
 
         return
 

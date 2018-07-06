@@ -15,15 +15,15 @@ class Matrix:
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def field(self):
-        field = []
-        for y in range(self.y_Max):
-            new_line = []
-            for x in range(self.x_Max):
-                new_line.append(Pixel(x, y))
-
-            field.append(new_line)
-
+    def field(self):                                # watch out! looks like this:
+        field = []                                  # ---x-------------------------------------------------------- #
+        for y in range(self.y_Max):                 # y (0,0) (1,0) (2,0) (3,0) (4,0) ...
+            new_line = []                           # | (0,1) (1,1) (2,1) (3,1) ...
+            for x in range(self.x_Max):             # | (0,2) (1,2) (2,2)  ...
+                new_line.append(Pixel(x, y))        # | (0,3) (1,3) ...
+                #                                   # | (0,4) ...
+            field.append(new_line)                  # | ...
+            #                                       # ------------------------------------------------------------ #
         return field
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -34,10 +34,10 @@ class Matrix:
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def draw_line_vertical(self, x, y_down, y_up):
+    def draw_line_vertical(self, x, y_up, y_down):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
-        line = np.arange(y_down, y_up+1, 1)
+        line = np.arange(y_up, y_down + 1, 1)
         for y in line:
             self.draw_pixel(x, y)
 
