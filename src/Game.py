@@ -3,7 +3,7 @@ from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm as Bla
 from Player import Player
 from Ball import Ball
 import cv2
-from RPi.GPIO import GPIO
+import RPi.GPIO as GPIO
 from picamera import PiCamera
 import numpy as np
 import io
