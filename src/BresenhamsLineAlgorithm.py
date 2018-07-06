@@ -5,12 +5,8 @@ class BresenhamsLineAlgorithm:
         self.max_x = len(matrix)
         self.max_y = len(matrix[0])
 
-    def calculate(self, start_pixel, end_pixel):
+    def calculate(self, start_x, start_y, end_x, end_y):
         path = []
-        start_x = start_pixel.x
-        start_y = start_pixel.y
-        end_x = end_pixel.x
-        end_y = end_pixel.y
         dx = start_x - end_x
         dy = start_y - end_y
 

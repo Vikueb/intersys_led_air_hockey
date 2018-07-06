@@ -7,7 +7,7 @@ from RPi.GPIO import GPIO
 from picamera import PiCamera
 import numpy as np
 import io
-import argparse
+# import argparse
 # import sys
 
 # sys.path.append('lib/rpi-rgb-led-matrix-master/bindings/python/rgbmatrix')
@@ -17,12 +17,12 @@ import argparse
 class Game:
 
     def __init__(self):
-        self.parser = argparse.ArgumentParser()
+        # self.parser = argparse.ArgumentParser()
 
-        self.parser.add_argument("-r", "--led-rows", action="store", help="Panel rows.", default=32, type=int)
-        self.parser.add_argument("--led-cols", action="store", help="Panel columns.", default=64, type=int)
+        # self.parser.add_argument("-r", "--led-rows", action="store", help="Panel rows.", default=32, type=int)
+        # self.parser.add_argument("--led-cols", action="store", help="Panel columns.", default=64, type=int)
 
-        self.matrix = Matrix(self.parser)
+        self.matrix = Matrix()              # self.parser)
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
@@ -38,6 +38,8 @@ class Game:
         # saving the picture to an in-program stream rather than a file
         self.stream = io.StringIO()
         self.standby()
+
+        return
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def setup_gpio(self):
@@ -64,17 +66,15 @@ class Game:
         # then register players
         while True:
             # try to register again
-            if not self.register_players():
+            if self.register_players():
                 break
-            # show standby again
-            self.matrix.draw_standby()
 
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def loop(self):
         # keep playing until somebody wins
-        while not self.winner:
+        while not self.wins:
             # keep playing until exit button or stop button are pressed
             if GPIO.input(self.exit_button):
                 print("The Game is being turned off because you hit the exit button!\n")
@@ -222,32 +222,36 @@ class Game:
         # and display Text "LOOSER" on the looser's side
 
         print("Player " + identity + " wins!\n")
+
+        self.wins = True
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def display_board(self):
-        self.matrix.draw_goals()                        # red
+        self.matrix.draw_goals()                            # red
 
-        self.matrix.draw_line_horizontal(0, 63, 0)      # green     outer line
-        self.matrix.draw_line_horizontal(0, 63, 31)     # green
-        self.matrix.draw_line_vertical(0, 0, 11)        # green
-        self.matrix.draw_line_vertical(0, 20, 31)       # green
-        self.matrix.draw_line_vertical(63, 0, 11)       # green
-        self.matrix.draw_line_vertical(63, 20, 31)      # green
+        self.matrix.draw_line_horizontal(0, 63, 0)          # green     outer line
+        self.matrix.draw_line_horizontal(0, 63, 31)         # green
+        self.matrix.draw_line_vertical(0, 0, 11)            # green
+        self.matrix.draw_line_vertical(0, 20, 31)           # green
+        self.matrix.draw_line_vertical(63, 0, 11)           # green
+        self.matrix.draw_line_vertical(63, 20, 31)          # green
 
-        self.matrix.draw_line_vertical(31, 0, 11)       # green     middle line
-        self.matrix.draw_line_vertical(31, 20, 31)      # green
+        self.matrix.draw_line_vertical(31, 0, 11)           # green     middle line
+        self.matrix.draw_line_vertical(31, 20, 31)          # green
 
-        self.matrix.draw_circle(31, 16, 5)
+        self.matrix.draw_circle(31, 16)                     # green
+        self.matrix.draw_pixel(31, 16)                      # green
+
+        self.matrix.draw_pixel(self.ball.x, self.ball.y)    # blue      ball
+
+        for x, y in (self.player1.x, self.player1.y):       # orange    player 1
+            self.matrix.draw_pixel(x, y)                    #
+
+        for x, y in (self.player2.x, self.player2.y):       # purple    player 2
+            self.matrix.draw_pixel(x, y)                    #
 
         return
-
-# ---------------------------------------------------------------------------------------------------------------- #
-    def get_player_score(self, identity):
-        if identity == 1:
-            return self.player1.score
-        else:
-            return self.player2.score
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def move_ball(self):

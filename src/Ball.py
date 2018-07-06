@@ -7,7 +7,7 @@ import math
 class Ball:
     x = 0
     y = 0
-    direction = 0       # in degrees, 0° is up, 90° is right, 180° is down, 270° is left
+    direction = 0       # in degrees, 0° is right, 90° is up, 180° is left, 270° is down
     path = []           # path calculated with bresenham line algorithm
     bresenham = []
 
@@ -34,12 +34,13 @@ class Ball:
             start = random.randint(0, 1)
         else:
             start = rand
+
         if start == 0:
             self.x = 21
-            self.direction = random.randint(50, 130)
+            self.direction = random.randint(320, 400) % 360     # right
         else:
             self.x = 42
-            self.direction = random.randint(230, 310)
+            self.direction = random.randint(140, 220)           # left
         self.y = random.randint(31, 32)
 
         return
@@ -57,10 +58,27 @@ class Ball:
     def calculate_path(self):
         # simulates the future movement of the ball
         units = 10
-        x = self.x + int(math.sin(self.direction) * units)
-        y = self.y + int(math.cos(self.direction) * units)
+        x = self.x + int(math.sin(math.radians(self.direction))) * units
+        y = self.y + int(math.cos(math.radians(self.direction))) * units
         pixel_start = Pixel(self.x, self.y)
         pixel_end = Pixel(x, y)
+
+        dx = self.x - x
+        dy = self.y - y
+        h = math.sqrt(dx**2 + dy**2)
+
+        # update degrees
+        if dx < 0 & dy < 0:
+            self.direction = 0 + math.degrees(math.acos(math.fabs(dx) / h))
+        else:
+            if dx < 0 & dy >= 0:
+                self.direction = 270 + math.degrees(math.acos(dy / h))
+            else:
+                if dx >= 0 & dy < 0:
+                    self.direction = 90 + math.degrees(math.acos(math.fabs(dy) / h))
+                else:
+                    # if dx >= 0 &  dy >= 0:
+                    self.direction = 180 + math.degrees(math.acos(math.fabs(dx) / h))
 
         self.path = self.bresenham.calculate(pixel_start, pixel_end)
 
