@@ -7,22 +7,12 @@ from RPi.GPIO import GPIO
 from picamera import PiCamera
 import numpy as np
 import io
-# import argparse
-# import sys
-
-# sys.path.append('lib/rpi-rgb-led-matrix-master/bindings/python/rgbmatrix')
-# from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
 
 class Game:
 
     def __init__(self):
-        # self.parser = argparse.ArgumentParser()
-
-        # self.parser.add_argument("-r", "--led-rows", action="store", help="Panel rows.", default=32, type=int)
-        # self.parser.add_argument("--led-cols", action="store", help="Panel columns.", default=64, type=int)
-
-        self.matrix = Matrix()              # self.parser)
+        self.matrix = Matrix()
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
@@ -37,7 +27,11 @@ class Game:
         self.camera = PiCamera()
         # saving the picture to an in-program stream rather than a file
         self.stream = io.StringIO()
-        self.standby()
+
+        # let the game begin!
+        while not GPIO.input(self.exit_button):
+            self.standby()
+            self.loop()
 
         return
 
@@ -61,6 +55,7 @@ class Game:
         # just light the edges of the matrix
         # until start button is pushed
         while not GPIO.input(self.start_button):
+            print("standby\n")
             self.matrix.draw_standby()
 
         # then register players
@@ -84,15 +79,16 @@ class Game:
                     print("returning to standby mode because the stop button was pressed!\n")
                     return
 
-            # let ball roll
-            self.move_ball()
+            for i in range(3):
+                # let ball roll
+                self.move_ball()
 
-            self.display_board()
+                self.display_board()
 
             # where are the hands of the players?
             self.take_and_process_picture()
 
-            for i in range(4):
+            for i in range(3):
                 # let ball roll
                 self.move_ball()
 
@@ -179,19 +175,20 @@ class Game:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def register_players(self):
+        print("Put your hands on the table!")
         # display Text:
         #                  Put your hand
         #                      here.
         #
-        #                        _
-        #                     _ | | _
-        #                  _ | || || |
-        #                 | || || || |  _
-        #                 | || || || | / /
-        #                 |          |/ /
-        #                 \            /
-        #                  \          /
-        #                   \________/
+        #                   _
+        #                _ | | _
+        #             _ | || || |
+        #            | || || || |  _
+        #            | || || || | / /
+        #            |          |/ /
+        #            \            /
+        #             \          /
+        #              \________/
 
         # then let the camera catch them
         self.take_and_process_picture()
@@ -203,10 +200,10 @@ class Game:
         # add point to score of the player who scored
         if identity == 1:
             self.player1.score += 1
-            print("player 1 scored a goal")
+            print("Player 1 scored a goal!\n")
         else:
             self.player2.score += 1
-            print("player 2 scored a goal")
+            print("Player 2 scored a goal!\n")
 
         # display Score on each side of the field
         print(self.player1.score + " : " + self.player2.score)
@@ -227,6 +224,7 @@ class Game:
         # display Text "WINNER" on the field side of the winner
         # and display Text "LOOSER" on the looser's side
 
+        print("Player " + "1" if identity == 0 else "0" + "looses!\n")
         print("Player " + identity + " wins!\n")
 
         self.wins = True
@@ -257,6 +255,15 @@ class Game:
         for x, y in (self.player2.x, self.player2.y):       # purple    player 2
             self.matrix.draw_pixel(x, y)                    #
 
+        print("-------------------------------------------------------------------------\n")
+        print("displaying board with ball at: (" + self.ball.x + ", " + self.ball.y + ")\n")
+        print("heading: " + self.ball.direction + ".\n")
+        print("Player 1 is on position: ")
+        print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), self.player1.x, self.player1.y))
+        print("Player 2 is on position: ")
+        print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), self.player2.x, self.player2.y))
+        print("-------------------------------------------------------------------------\n")
+
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -270,10 +277,10 @@ class Game:
         # hit?
         if self.player1.x == self.ball.x & self.player1.y == self.ball.y:
             self.ball.calculate_path()
-            print("player 1 hit the ball")
+            print("player 1 hit the ball\n")
         if self.player2.x == self.ball.x & self.player2.y == self.ball.y:
             self.ball.calculate_path()
-            print("player 2 hit the ball")
+            print("player 2 hit the ball\n")
 
         return
 
