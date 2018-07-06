@@ -1,20 +1,17 @@
 from random import random
-from BresenhamsLineAlgorithm import BresenhamsLineAlgorithm as Bla
-from Matrix import Pixel
 import math
 
 
 class Ball:
     x = 0
     y = 0
-    direction = 0       # in degrees, 0° is right, 90° is up, 180° is left, 270° is down
+    direction = 0       # in degrees, 0 is right, 90 is up, 180 is left, 270 is down
     path = []           # path calculated with bresenham line algorithm
-    bresenham = []
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def __init__(self, matrix):
+    def __init__(self, bresenham):
         self.set_ball(-1)
-        self.bresenham = Bla(matrix)
+        self.bresenham = bresenham
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def update_position(self):

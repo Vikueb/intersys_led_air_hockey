@@ -16,13 +16,13 @@ class Game:
         self.bresenham = Bla(self.matrix)
         self.player1 = Player(1)
         self.player2 = Player(2)
-        self.ball = Ball(self.matrix)
+        self.ball = Ball(self.bresenham)
         self.wins = False
 
         self.usage()
 
-        self.start_button = 16
-        self.exit_button = 20
+        self.start_button = 38
+        self.exit_button = 40
         self.setup_gpio()
         self.camera = PiCamera()
         # saving the picture to an in-program stream rather than a file
