@@ -306,9 +306,10 @@ camera = PiCamera()
 stream = io.StringIO()
 
 print("let the game begin!")
-while not GPIO.input(exit_button):
+while GPIO.input(exit_button) == 0:
     standby()
     print("entering game mode now!")
     loop()
 
+print("game was ended!")
 GPIO.cleanup()
