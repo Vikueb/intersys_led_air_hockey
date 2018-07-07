@@ -14,6 +14,7 @@ def setup_gpio():
     # pin setup for matrix
     # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
     GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
     pins = [7, 11, 13, 15, 19, 21, 23, 12, 16, 18, 22, 24, 26]
     for p in pins:
         GPIO.setup(p, GPIO.OUT)
