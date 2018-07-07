@@ -92,7 +92,7 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
-    camera.capture(stream, format='bgr', use_video_port=True)
+    camera.capture(stream, format="bgr", use_video_port=True)
     # convert image into numpy array
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 
