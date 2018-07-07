@@ -13,7 +13,6 @@ import io
 def setup_gpio():
     # pin setup for matrix
     # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
-    GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD)
     pins = [7, 11, 13, 15, 19, 21, 23, 12, 16, 18, 22, 24, 26]
     for p in pins:
@@ -307,3 +306,5 @@ while not GPIO.input(exit_button):
     standby()
     print("entering game mode now!")
     loop()
+
+GPIO.cleanup()
