@@ -7,6 +7,7 @@ import RPi.GPIO as GPIO
 from picamera import PiCamera
 import numpy as np
 import io
+from time import sleep
 
 # globals
 matrix = Matrix()
@@ -92,7 +93,10 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
-    camera.capture(stream, format="bgr", use_video_port=True)
+    camera.start_preview()
+    sleep(5)
+    camera.capture(stream, format="bgr")
+    camera.stop_preview()
     # convert image into numpy array
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
 
