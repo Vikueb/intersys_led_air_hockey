@@ -12,6 +12,7 @@ class Ball:
     def __init__(self, bresenham):
         self.set_ball(-1)
         self.bresenham = bresenham
+        random.seed()
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def update_position(self):
