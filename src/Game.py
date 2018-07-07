@@ -8,11 +8,20 @@ from picamera import PiCamera
 import numpy as np
 import io
 
+# globals
+matrix = Matrix()
+bresenham = Bla(matrix)
+player1 = Player(1)
+player2 = Player(2)
+ball = Ball(bresenham)
+wins = False
+
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def setup_gpio():
     # pin setup for matrix
     # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
+    print("setting up GPIO")
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
     pins = [7, 11, 13, 15, 19, 21, 23, 12, 16, 18, 22, 24, 26]
@@ -22,6 +31,7 @@ def setup_gpio():
     # pin setup for buttons
     GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
     return
 
 
@@ -286,13 +296,6 @@ def usage():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # let's go!
-matrix = Matrix()
-bresenham = Bla(matrix)
-player1 = Player(1)
-player2 = Player(2)
-ball = Ball(bresenham)
-wins = False
-
 usage()
 
 start_button = 38
@@ -302,7 +305,7 @@ camera = PiCamera()
 # saving the picture to an in-program stream rather than a file
 stream = io.StringIO()
 
-# let the game begin!
+print("let the game begin!")
 while not GPIO.input(exit_button):
     standby()
     print("entering game mode now!")
