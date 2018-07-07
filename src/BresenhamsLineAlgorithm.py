@@ -5,8 +5,8 @@ class BresenhamsLineAlgorithm:
 
     def __init__(self, matrix):
         self.matrix = matrix
-        self.max_x = len(matrix)
-        self.max_y = len(matrix[0])
+        self.max_x = matrix.x_Max
+        self.max_y = matrix.y_Max
 
     def calculate(self, start_x, start_y, end_x, end_y):
         path = []
