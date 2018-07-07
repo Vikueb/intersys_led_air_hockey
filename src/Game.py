@@ -17,6 +17,12 @@ player2 = Player(2)
 ball = Ball(bresenham)
 wins = False
 
+start_button = 38
+exit_button = 40
+camera = PiCamera()
+# saving the picture to an in-program stream rather than a file
+stream = io.StringIO()
+
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def setup_gpio():
@@ -94,7 +100,7 @@ def take_and_process_picture():
 
     # capture picture into stream
     camera.start_preview()
-    sleep(5)
+    sleep(1)
     camera.capture(stream, format="bgr")
     camera.stop_preview()
     # convert image into numpy array
@@ -300,14 +306,8 @@ def usage():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 # let's go!
-usage()
-
-start_button = 38
-exit_button = 40
 setup_gpio()
-camera = PiCamera()
-# saving the picture to an in-program stream rather than a file
-stream = io.StringIO()
+usage()
 
 print("let the game begin!")
 while GPIO.input(exit_button) == 0:
