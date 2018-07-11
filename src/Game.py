@@ -104,7 +104,7 @@ def take_and_process_picture():
     camera.capture(stream, format="bgr", use_video_port=True)
     camera.stop_preview()
 
-    cv2.imshow(cv2.VideoCapture().read()[1])
+    cv2.imshow("test", cv2.VideoCapture().read()[1])
 
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
