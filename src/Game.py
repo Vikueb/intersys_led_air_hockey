@@ -104,24 +104,21 @@ def take_and_process_picture():
     camera.capture(stream, format="bgr", use_video_port=True)
     camera.stop_preview()
     # convert image into numpy array
-    print(stream.getvalue().__sizeof__(), stream.getvalue()[0].__sizeof__())
     data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
-    # split in picture into two sides
-    print(data.size, data[0].size, "\n")
-    print(data.shape)
-    d = data[0].size if data[0].size % 2 == 0 else data[0].size+1
-    d = int(0.5*d)
-    data_left = data[0:d, 0:data.size]
-    data_right = data[d:data[0].size, 0:data.size]
+    # turn data into cv2 image
+    img = cv2.imdecode(data, 1)
+    print(img.size, img[0].size)
 
-    # turn the arrays into cv2 images
-    left = cv2.imdecode(data_left, 1)
-    right = cv2.imdecode(data_right, 1)
+    # split in picture into two sides
+    d = img[0].size if img[0].size % 2 == 0 else img[0].size-1
+    d = int(0.5*d)
+    left = img[0:d, 0:img.size]
+    right = img[d:img[0].size, 0:img.size]
 
     # Resizing the images and convert them to HSV values for better recognition
-    left = cv2.resize(left, (64, 32))
-    right = cv2.resize(right, (64, 32))
+    left = cv2.resize(left, (32, 32))
+    right = cv2.resize(right, (32, 32))
 
     left = cv2.cvtColor(left, cv2.COLOR_BGR2HSV)
     right = cv2.cvtColor(right, cv2.COLOR_BGR2HSV)
