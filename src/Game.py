@@ -98,6 +98,7 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
+    camera.resolution = (640, 320)
     camera.start_preview()
     sleep(0.5)
     camera.capture(stream, format="bgr", use_video_port=True)
@@ -107,7 +108,8 @@ def take_and_process_picture():
 
     # turn data into cv2 image
     print(stream.array.size/ stream.array[0].size, stream.array[0].size)
-    img = cv2.imdecode(stream.array, 1)
+    # img = cv2.imdecode(stream.array, 1)
+    img = stream.array
 
     # split in picture into two sides
     d = img[0].size if img[0].size % 2 == 0 else img[0].size-1
