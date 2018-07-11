@@ -104,10 +104,6 @@ def take_and_process_picture():
     camera.capture(stream, format="bgr", use_video_port=True)
     camera.stop_preview()
 
-    frame = cv2.VideoCapture().read()[1]
-    cv2.imshow("test", frame)
-    print(frame.size, frame.type())
-
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
     img = np.frombuffer(stream.getvalue(), dtype=np.uint8).reshape(640, 320, 3)
@@ -146,6 +142,9 @@ def take_and_process_picture():
     # making it smaller
     left_hand = cv2.erode(left_hand, kernel)
     right_hand = cv2.erode(right_hand, kernel)
+
+    left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
+    right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
 
     print(type(left_hand), type(right_hand))
 
