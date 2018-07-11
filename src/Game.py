@@ -107,18 +107,16 @@ def take_and_process_picture():
     # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # turn data into cv2 image
-    # Achtung array format: [[...],     Spalten ->
-    #                        [...]]     Zeilen |
     print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
     img = stream.array
 
     # split in picture into two sides
-    y = img[0].size / 3
-    y = y if y % 2 == 0 else y-1
-    y = int(0.5*y)
-    max_x = img.size / img[0].size
-    left = img[0:y, 0:max_x]
-    right = img[y:img[0].size/3, 0:max_x]
+    x = img[0].size / 3
+    x = x if x % 2 == 0 else x-1
+    x = int(0.5*x)
+    max_y = img.size / img[0].size
+    left = img[0:max_y, 0:x]
+    right = img[0:max_y, x:img[0].size/3]
 
     # Resizing the images and convert them to HSV values for better recognition
     left = cv2.resize(left, (32, 32))
@@ -158,9 +156,9 @@ def take_and_process_picture():
     if not left_contours == []:
         print("player 1 detected!")
         middle = cv2.moments(left_contours)
-        y = int(middle["m10"] / middle["m00"])
-        y = int(middle["m01"] / middle["m00"])
-        player1.set_position(y, y)
+        x = int(middle["m10"] / middle["m00"])
+        x = int(middle["m01"] / middle["m00"])
+        player1.set_position(x, x)
         player1_reg = True
     else:
         print("player 1 not detected.")
@@ -168,9 +166,9 @@ def take_and_process_picture():
     if not right_contours == []:
         print("player 2 detected!")
         middle = cv2.moments(right_contours)
-        y = int(middle["m10"] / middle["m00"])
-        y = int(middle["m01"] / middle["m00"])
-        player1.set_position(y, y)
+        x = int(middle["m10"] / middle["m00"])
+        x = int(middle["m01"] / middle["m00"])
+        player1.set_position(x, x)
         player2_reg = True
     else:
         print("player 2 not detected.")
