@@ -147,6 +147,9 @@ def take_and_process_picture():
 
     print(type(left_hand), type(right_hand))
 
+    left_hand = cv2.fromarray(left_hand)
+    right_hand = cv2.fromarray(right_hand)
+
     left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
     right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
 
