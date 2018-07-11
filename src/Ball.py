@@ -40,6 +40,7 @@ class Ball:
             self.x = 42
             self.direction = random.randint(140, 220)           # left
         self.y = random.randint(31, 32)
+        self.path = []
 
         return
 
