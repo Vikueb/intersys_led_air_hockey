@@ -108,7 +108,7 @@ def take_and_process_picture():
 
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
-    img = np.frombuffer(stream.array).reshape(640, 320)
+    img = np.frombuffer(stream.array.getvalue(), dtype=np.uint8).reshape(640, 320)
 
     # split in picture into two sides
     x = img[0].size / 3
