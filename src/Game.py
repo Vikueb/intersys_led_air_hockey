@@ -174,7 +174,7 @@ def take_and_process_picture():
         print("player 2 not detected.")
 
     cv2.destroyAllWindows()
-    globals().stream = array.PiRGBArray(camera)
+    # globals()['stream'] = array.PiRGBArray(camera)
 
     return player1_reg & player2_reg
 
