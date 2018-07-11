@@ -107,8 +107,8 @@ def take_and_process_picture():
     data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # split in picture into two sides
-    data_left = data[0:int:(0.5*len(data[0])), 0:len(data)]
-    data_right = data[int:(0.5*len(data[0])):len(data[0]), 0:len(data)]
+    data_left = data[0:int:(0.5*data[0].size), 0:data.size]
+    data_right = data[int:(0.5*data[0].size):data[0].size, 0:data.size]
 
     # turn the arrays into cv2 images
     left = cv2.imdecode(data_left, 1)
