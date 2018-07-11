@@ -103,8 +103,8 @@ def take_and_process_picture():
     sleep(0.5)
     camera.capture(stream, format="bgr", use_video_port=True)
     camera.stop_preview()
-    # convert image into numpy array
-    # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
+
+    cv2.imshow(cv2.VideoCapture().read()[1])
 
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
