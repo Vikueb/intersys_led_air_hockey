@@ -11,7 +11,7 @@ from time import sleep
 # globals
 matrix = Matrix()
 bresenham = Bla(matrix)
-player1 = Player(1)
+player1= Player(1)
 player2 = Player(2)
 ball = Ball(bresenham)
 wins = False
@@ -62,7 +62,7 @@ def standby():
 # ---------------------------------------------------------------------------------------------------------------- #
 def loop():
     # keep playing until somebody wins
-    while not wins:
+    while not globals()['wins']:
         # keep playing until exit button or stop button are pressed
         if GPIO.input(exit_button) == 1:
             print("The Game is being turned off because you hit the exit button!\n")
@@ -173,6 +173,9 @@ def take_and_process_picture():
     else:
         print("player 2 not detected.")
 
+    cv2.destroyAllWindows()
+    globals().stream = array.PiRGBArray(camera)
+
     return player1_reg & player2_reg
 
 
@@ -216,11 +219,11 @@ def goal(identity):
     # if score of one player is 10 he wins
     if player1.score == 10:
         winner(1)
-        globals().wins = True
+        globals()['wins'] = True
     else:
         if player2.score == 10:
             winner(2)
-            globals().wins = True
+            globals()['wins'] = True
 
     return
 
@@ -233,7 +236,7 @@ def winner(identity):
     print("Player " + "1" if identity == 0 else "0" + "looses!\n")
     print("Player " + identity + " wins!\n")
 
-    globals().wins = True
+    globals()['wins'] = True
     return
 
 
