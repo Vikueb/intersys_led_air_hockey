@@ -146,8 +146,6 @@ def take_and_process_picture():
     left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
     right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
 
-    print(type(left_hand), type(right_hand))
-
     left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
     right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
 
@@ -157,8 +155,8 @@ def take_and_process_picture():
         print("player 1 detected!")
         middle = cv2.moments(left_contours)
         x = int(middle["m10"] / middle["m00"])
-        x = int(middle["m01"] / middle["m00"])
-        player1.set_position(x, x)
+        y = int(middle["m01"] / middle["m00"])
+        player1.set_position(x, y)
         player1_reg = True
     else:
         print("player 1 not detected.")
@@ -167,8 +165,8 @@ def take_and_process_picture():
         print("player 2 detected!")
         middle = cv2.moments(right_contours)
         x = int(middle["m10"] / middle["m00"])
-        x = int(middle["m01"] / middle["m00"])
-        player1.set_position(x, x)
+        y = int(middle["m01"] / middle["m00"])
+        player1.set_position(x, y)
         player2_reg = True
     else:
         print("player 2 not detected.")
