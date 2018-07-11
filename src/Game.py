@@ -122,34 +122,31 @@ def take_and_process_picture():
     left = cv2.resize(left, (32, 32))
     right = cv2.resize(right, (32, 32))
 
-    left = cv2.cvtColor(left, cv2.COLOR_BGR2HSV)
-    right = cv2.cvtColor(right, cv2.COLOR_BGR2HSV)
-
     # Defining the skin color range and calculating if these values lie in that
-    red_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
-    red_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
-    # binarize
-    left_binary = cv2.inRange(left, red_lower, red_upper)
-    right_binary = cv2.inRange(right, red_lower, red_upper)
-    # threshold
-    left_thresh = cv2.threshold(left_binary, 60, 255, cv2.THRESH_BINARY)[1]
-    right_thresh = cv2.threshold(right_binary, 60, 255, cv2.THRESH_BINARY)[1]
+    skin_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
+    skin_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
+    # get the mask
+    left_mask = cv2.inRange(left, skin_lower, skin_upper)
+    right_mask = cv2.inRange(right, skin_lower, skin_upper)
+    # apply mask
+    left_hand = cv2.bitwise_and(left, left, mask=left_mask)
+    right_hand = cv2.bitwise_and(right, right, mask=right_mask)
 
     # cleans the skin colour space, extracting noise making it smaller
     # https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
     kernel = np.ones((3, 3), "uint8")
     # outside noise cancelling
-    left_thresh = cv2.morphologyEx(left_thresh, cv2.MORPH_OPEN, kernel)
-    right_thresh = cv2.morphologyEx(right_thresh, cv2.MORPH_OPEN, kernel)
+    left_hand = cv2.morphologyEx(left_hand, cv2.MORPH_OPEN, kernel)
+    right_hand = cv2.morphologyEx(right_hand, cv2.MORPH_OPEN, kernel)
     # inside noise cancelling
-    left_thresh = cv2.morphologyEx(left_thresh, cv2.MORPH_CLOSE, kernel)
-    right_thresh = cv2.morphologyEx(right_thresh, cv2.MORPH_CLOSE, kernel)
+    left_hand = cv2.morphologyEx(left_hand, cv2.MORPH_CLOSE, kernel)
+    right_hand = cv2.morphologyEx(right_hand, cv2.MORPH_CLOSE, kernel)
     # making it smaller
-    left_thresh = cv2.erode(left_thresh, kernel)
-    right_thresh = cv2.erode(right_thresh, kernel)
+    left_hand = cv2.erode(left_hand, kernel)
+    right_hand = cv2.erode(right_hand, kernel)
 
-    left_contours, _ = cv2.findContours(left_thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    right_contours, _ = cv2.findContours(right_thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
