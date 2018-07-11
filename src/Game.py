@@ -107,6 +107,8 @@ def take_and_process_picture():
     data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # split in picture into two sides
+    print(data.size, data[0].size, "\n")
+    print(data.shape)
     d = data[0].size if data[0].size % 2 == 0 else data[0].size+1
     d = int(0.5*d)
     data_left = data[0:d, 0:data.size]
