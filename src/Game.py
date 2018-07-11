@@ -98,7 +98,7 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
-    camera.resolution = (640, 320)
+    camera.resolution = (320, 640)
     camera.start_preview()
     sleep(0.5)
     camera.capture(stream, format="bgr", use_video_port=True)
@@ -107,15 +107,16 @@ def take_and_process_picture():
     # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # turn data into cv2 image
-    print(stream.array.size/ stream.array[0].size, stream.array[0].size)
-    # img = cv2.imdecode(stream.array, 1)
+    print(stream.array.size / stream.array[0].size, stream.array[0].size / 3)
     img = stream.array
 
     # split in picture into two sides
-    d = img[0].size if img[0].size % 2 == 0 else img[0].size-1
-    d = int(0.5*d)
-    left = img[0:d, 0:img.size]
-    right = img[d:img[0].size, 0:img.size]
+    x = img[0].size / 3
+    x = x if x % 2 == 0 else x-1
+    x = int(0.5*x)
+    max_y = img.size / img[0].size
+    left = img[0:x, 0:max_y]
+    right = img[x:img[0].size/3, 0:max_y]
 
     # Resizing the images and convert them to HSV values for better recognition
     left = cv2.resize(left, (32, 32))
