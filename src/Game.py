@@ -4,8 +4,7 @@ from Player import Player
 from Ball import Ball
 import cv2
 import RPi.GPIO as GPIO
-import picamera
-import picamera.array
+from picamera import PiCamera, array
 import numpy as np
 from time import sleep
 
@@ -19,9 +18,9 @@ wins = False
 
 start_button = 38
 exit_button = 40
-camera = picamera.PiCamera()
+camera = PiCamera()
 # saving the picture to an in-program stream rather than a file
-stream = picamera.array.PiRGBArray(camera)
+stream = array.PiRGBArray(camera)
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -107,8 +106,7 @@ def take_and_process_picture():
     # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # turn data into cv2 image
-    # img = cv2.imdecode(data, 1)
-    img = stream.array
+    img = cv2.imdecode(stream.array, 1)
     print(img.size, img[0].size)
 
     # split in picture into two sides
