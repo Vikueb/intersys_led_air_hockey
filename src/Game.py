@@ -4,9 +4,9 @@ from Player import Player
 from Ball import Ball
 import cv2
 import RPi.GPIO as GPIO
-from picamera import PiCamera
+import picamera
+import picamera.array
 import numpy as np
-import io
 from time import sleep
 
 # globals
@@ -19,9 +19,9 @@ wins = False
 
 start_button = 38
 exit_button = 40
-camera = PiCamera()
+camera = picamera.PiCamera()
 # saving the picture to an in-program stream rather than a file
-stream = PiCamera.array.PiRGBArray(camera)
+stream = picamera.array.PiRGBArray(camera)
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
