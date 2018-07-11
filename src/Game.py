@@ -21,7 +21,7 @@ start_button = 38
 exit_button = 40
 camera = PiCamera()
 # saving the picture to an in-program stream rather than a file
-stream = io.BytesIO()
+stream = PiCamera.array.PiRGBArray(camera)
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -104,10 +104,11 @@ def take_and_process_picture():
     camera.capture(stream, format="bgr", use_video_port=True)
     camera.stop_preview()
     # convert image into numpy array
-    data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
+    # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # turn data into cv2 image
-    img = cv2.imdecode(data, 1)
+    # img = cv2.imdecode(data, 1)
+    img = stream.array
     print(img.size, img[0].size)
 
     # split in picture into two sides
