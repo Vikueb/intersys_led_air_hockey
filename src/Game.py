@@ -107,7 +107,7 @@ def take_and_process_picture():
     # data = np.frombuffer(stream.getvalue(), dtype=np.uint8)
 
     # turn data into cv2 image
-    print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
+    # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
     img = stream.array
 
     # split in picture into two sides
@@ -145,8 +145,10 @@ def take_and_process_picture():
     left_hand = cv2.erode(left_hand, kernel)
     right_hand = cv2.erode(right_hand, kernel)
 
-    left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    print(type(left_hand), type(right_hand))
+
+    left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
+    right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
@@ -201,9 +203,11 @@ def goal(identity):
     if identity == 1:
         player1.score += 1
         print("Player 1 scored a goal!\n")
+        ball.set_ball(0)
     else:
         player2.score += 1
         print("Player 2 scored a goal!\n")
+        ball.set_ball(1)
 
     # display Score on each side of the field
     print(player1.score + " : " + player2.score)
@@ -211,11 +215,11 @@ def goal(identity):
     # if score of one player is 10 he wins
     if player1.score == 10:
         winner(1)
-        wins = True
+        globals().wins = True
     else:
         if player2.score == 10:
             winner(2)
-            wins = True
+            globals().wins = True
 
     return
 
@@ -228,7 +232,7 @@ def winner(identity):
     print("Player " + "1" if identity == 0 else "0" + "looses!\n")
     print("Player " + identity + " wins!\n")
 
-    wins = True
+    globals().wins = True
     return
 
 
