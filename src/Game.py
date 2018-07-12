@@ -11,7 +11,7 @@ from time import sleep
 # globals
 matrix = Matrix()
 bresenham = Bla(matrix)
-player1= Player(1)
+player1 = Player(1)
 player2 = Player(2)
 ball = Ball(bresenham)
 wins = False
@@ -19,8 +19,6 @@ wins = False
 start_button = 38
 exit_button = 40
 camera = PiCamera()
-# saving the picture to an in-program stream rather than a file
-stream = array.PiRGBArray(camera)
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -98,6 +96,7 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
+    stream = array.PiRGBArray(camera)
     camera.resolution = (640, 320)      # (x,y)
     camera.start_preview()
     sleep(0.5)
@@ -172,7 +171,6 @@ def take_and_process_picture():
         print("player 2 not detected.")
 
     cv2.destroyAllWindows()
-    # globals()['stream'] = array.PiRGBArray(camera)
 
     return player1_reg & player2_reg
 
