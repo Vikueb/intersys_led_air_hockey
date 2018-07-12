@@ -33,7 +33,7 @@ def setup_gpio():
         GPIO.setup(p, GPIO.OUT)
 
     # pin setup for buttons
-    GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     return
