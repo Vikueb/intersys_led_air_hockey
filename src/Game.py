@@ -197,8 +197,7 @@ def register_players():
     #              \________/
 
     # then let the camera catch them
-    take_and_process_picture()
-    return
+    return take_and_process_picture()
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
