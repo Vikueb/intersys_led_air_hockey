@@ -34,7 +34,7 @@ def setup_gpio():
 
     # pin setup for buttons
     GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     return
 
