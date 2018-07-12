@@ -41,12 +41,14 @@ def setup_gpio():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def standby():
+    start_input = GPIO.input(start_button)
     # just light the edges of the matrix
     # until start button is pushed
-    while not GPIO.input(start_button) == 1:
+    while not start_input:
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
+        start_input = GPIO.input(start_button)
 
     # then register players
     while True:
@@ -61,12 +63,14 @@ def standby():
 def loop():
     # keep playing until somebody wins
     while not globals()['wins']:
+        start_input = GPIO.input(start_button)
+        exit_input = GPIO.input(exit_button)
         # keep playing until exit button or stop button are pressed
-        if GPIO.input(exit_button) == 1:
+        if exit_input:
             print("The Game is being turned off because you hit the exit button!\n")
             exit()
         else:
-            if GPIO.input(start_button) == 1:
+            if start_input:
                 print("returning to standby mode because the stop button was pressed!\n")
                 return
 
