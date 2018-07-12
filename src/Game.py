@@ -152,6 +152,8 @@ def take_and_process_picture():
     left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
     right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
 
+    print(left_contours.type())
+
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
     if not left_contours == []:
@@ -319,10 +321,12 @@ setup_gpio()
 usage()
 
 print("let the game begin!")
-while GPIO.input(exit_button) == 0:
+exit_input = GPIO.input(exit_button)
+while not exit_input:
     standby()
     print("entering game mode now!")
     loop()
+    exit_input = GPIO.input(exit_button)
 
 print("game was ended!")
 GPIO.cleanup()
