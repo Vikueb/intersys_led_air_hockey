@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/vkueb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/vkueb.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.py" afterDir="false" />
     </list>
@@ -17,8 +18,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="102" column="61" lean-forward="true" selection-start-line="102" selection-start-column="61" selection-end-line="102" selection-end-column="61" />
+            <state relative-caret-position="481">
+              <caret line="375" column="48" selection-start-line="375" selection-start-column="48" selection-end-line="375" selection-end-column="48" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -29,7 +30,7 @@
       <file leaf-file-name="Ball.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Ball.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
+            <state relative-caret-position="-114">
               <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -122,7 +123,7 @@
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.16557734" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.16448802" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -138,6 +139,86 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="111" column="75" selection-start-line="111" selection-start-column="75" selection-end-line="111" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ball.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2448">
+          <caret line="152" column="91" selection-start-line="152" selection-start-column="91" selection-end-line="152" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ball.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="152" column="91" selection-start-line="152" selection-start-column="91" selection-end-line="152" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ball.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="152" column="91" selection-start-line="152" selection-start-column="91" selection-end-line="152" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ball.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -190,7 +271,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Ball.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
+        <state relative-caret-position="-114">
           <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -200,8 +281,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="102" column="61" lean-forward="true" selection-start-line="102" selection-start-column="61" selection-end-line="102" selection-end-column="61" />
+        <state relative-caret-position="481">
+          <caret line="375" column="48" selection-start-line="375" selection-start-column="48" selection-end-line="375" selection-end-column="48" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

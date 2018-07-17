@@ -23,6 +23,10 @@ camera = PiCamera()
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def setup_gpio():
+    """
+    Does the setup for all GPIO Pins, except for the two buttons, as they have to be set globally
+    :return: when setup is completed
+    """
     # pin setup for matrix
     # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
     print("setting up GPIO")
@@ -41,6 +45,11 @@ def setup_gpio():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def standby():
+    """
+    Shows the standby mode of the matrix, as long as the start button is not pressed.
+    When the start button is pressed it waits for both players to be ready.
+    :return: when 'start' was pressed and both players are registered
+    """
     start_input = GPIO.input(start_button)
     # just light the edges of the matrix
     # until start button is pushed
@@ -61,7 +70,13 @@ def standby():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def loop():
-    # keep playing until somebody wins
+    """
+    keep playing until somebody wins
+    1. checks if either 'stop' or 'exit' button were pressed
+    2. searches for players hand positions
+    3. moves ball for two steps and also displays the field
+    :return: when 'start'/ 'stop' button was pressed again
+    """
     while not globals()['wins']:
         start_input = GPIO.input(start_button)
         exit_input = GPIO.input(exit_button)
@@ -74,16 +89,10 @@ def loop():
                 print("returning to standby mode because the stop button was pressed!\n")
                 return
 
-        for i in range(3):
-            # let ball roll
-            move_ball()
-
-            display_board()
-
         # where are the hands of the players?
         take_and_process_picture()
 
-        for i in range(3):
+        for i in range(2):
             # let ball roll
             move_ball()
 
@@ -94,13 +103,27 @@ def loop():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def take_and_process_picture():
+    """
+    1. a local stream for picture saving is initialised
+    2. camera resolution is set and picture captured into stream
+    3. the captured image is read from the stream and split into the two sides
+    4. the (now) two pictures are resized to the size of the field
+    5. the mask for the hands is created
+    6. the pictures are reduced to the hand positions
+    7. the background/ foreground noise is reduced
+    8. the pictures are converted in gray tones
+    9. the contours of the hands are searched and saved
+    10. the middle of the contours is determined
+    11. the new player positions are set
+    :return: True when both players hands were found - important for standby() when registering players
+    """
     player1_reg = False
     player2_reg = False
     # code oriented at:
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
-    stream = array.PiRGBArray(camera)
+    stream = array.PiBGRArray(camera)
     camera.resolution = (640, 320)      # (x,y)
     camera.start_preview()
     sleep(0.5)
@@ -109,7 +132,7 @@ def take_and_process_picture():
 
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
-    img = np.frombuffer(stream.getvalue(), dtype=np.uint8).reshape(640, 320, 3)
+    img = np.frombuffer(stream.getvalue(), dtype=np.uint8).reshape(320, 640, 3)
 
     # split in picture into two sides
     x = img[0].size / 3
@@ -149,8 +172,8 @@ def take_and_process_picture():
     left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
     right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
 
-    left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[0]
-    right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[0]
+    left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
+    right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
@@ -181,6 +204,11 @@ def take_and_process_picture():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def register_players():
+    """
+    method that displays on the matrix, that the players should put their hands on the table
+    so the camera can capture them
+    :return: True if it was possible to determine positions for both players
+    """
     print("Put your hands on the table!")
     # display Text:
     #                  Put your hand
@@ -202,6 +230,12 @@ def register_players():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def goal(identity):
+    """
+    1. adds a point to the score of the player who scored
+    2. checks if a player reached ten points and therefore wins
+    :param identity: id of the player who scored
+    :return: void
+    """
     # add point to score of the player who scored
     if identity == 1:
         player1.score += 1
@@ -218,19 +252,21 @@ def goal(identity):
     # if score of one player is 10 he wins
     if player1.score == 10:
         winner(1)
-        globals()['wins'] = True
     else:
         if player2.score == 10:
             winner(2)
-            globals()['wins'] = True
 
     return
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def winner(identity):
-    # display Text "WINNER" on the field side of the winner
-    # and display Text "LOOSER" on the looser's side
+    """
+    1. display Text "WINNER" on the field side of the winner and Text "LOOSER" on the looser's side
+    2. set global variable "wins" to true, so the loop can be exited
+    :param identity: id of the player who reached 10 points
+    :return: void
+    """
 
     print("Player " + "1" if identity == 0 else "0" + "looses!\n")
     print("Player " + identity + " wins!\n")
@@ -241,6 +277,10 @@ def winner(identity):
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def display_board():
+    """
+    displays the field/ board (outer lines, middle, goals, ball & players)
+    :return: void
+    """
     matrix.draw_goals()                            # red
 
     matrix.draw_line_horizontal(0, 63, 0)          # green     outer line
@@ -256,12 +296,12 @@ def display_board():
     matrix.draw_circle(31, 16)                     # green
     matrix.draw_pixel(31, 16)                      # green
 
-    matrix.draw_pixel(ball.x, ball.y)    # blue      ball
+    matrix.draw_pixel(ball.x, ball.y)              # blue      ball
 
-    for x, y in (player1.x, player1.y):       # orange    player 1
+    for x, y in (player1.x, player1.y):            # orange    player 1
         matrix.draw_pixel(x, y)                    #
 
-    for x, y in (player2.x, player2.y):       # purple    player 2
+    for x, y in (player2.x, player2.y):            # purple    player 2
         matrix.draw_pixel(x, y)                    #
 
     print("-------------------------------------------------------------------------\n")
@@ -278,6 +318,12 @@ def display_board():
 
 # ---------------------------------------------------------------------------------------------------------------- #
 def move_ball():
+    """
+    1. ball is moved
+    2. check if it is a gaol
+    3. check if a player hit the ball - if yes calculate a new path of the goal
+    :return:
+    """
     ball.move()
     # goal?
     scored = matrix.is_goal(ball.x, ball.y)
@@ -285,10 +331,19 @@ def move_ball():
         goal(scored)
 
     # hit?
-    if player1.x == ball.x & player1.y == ball.y:
+    a = player1.x[0] == ball.x & player1.y[0] == ball.y
+    b = player1.x[1] == ball.x & player1.y[1] == ball.y
+    c = player1.x[2] == ball.x & player1.y[2] == ball.y
+    d = player1.x[3] == ball.x & player1.y[3] == ball.y
+    if a | b | c | d:
         ball.calculate_path()
         print("player 1 hit the ball\n")
-    if player2.x == ball.x & player2.y == ball.y:
+
+    a = player2.x[0] == ball.x & player2.y[0] == ball.y
+    b = player2.x[1] == ball.x & player2.y[1] == ball.y
+    c = player2.x[2] == ball.x & player2.y[2] == ball.y
+    d = player2.x[3] == ball.x & player2.y[3] == ball.y
+    if a | b | c | d:
         ball.calculate_path()
         print("player 2 hit the ball\n")
 
@@ -313,7 +368,13 @@ def usage():
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
-# let's go!
+"""
+let's go!
+The actual game starts here!
+1. Game remains in standby mode until the start button is hit.
+2. Game is played (loop) while nobody won or the stop button is hit
+3. If the exit button is hit the table turns off
+"""
 setup_gpio()
 usage()
 
