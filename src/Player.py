@@ -13,6 +13,12 @@ class Player:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def set_position(self, new_x, new_y):
+        """
+        sets the position of the player according to the hand middle detected
+        :param new_x: x position detected
+        :param new_y: y position detected
+        :return: reserves 4 positions for the player, void
+        """
         self.x = np.zeros([4])
         self.y = np.zeros([4])
         self.x[0] = new_x

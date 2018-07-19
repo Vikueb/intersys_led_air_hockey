@@ -35,6 +35,38 @@ class Ball:
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
+    def update_direction(self):
+        """
+        updates the direction of the ball, by taking the current point and the over next one
+        :return: void
+        """
+        future_x = self.path[1].x
+        future_y = self.path[1].y
+
+        # keep going the same direction if the present and future are the same (e.g. by reflecting from a corner
+        if future_x == self.x & future_y == self.y:
+            return
+
+        dx = self.x - future_x
+        dy = self.y - future_y
+
+        # else fit the direction to the future
+        if dx < 0 & dy < 0:
+            self.direction = 270 + math.degrees(math.atan(dy / dx))
+            return
+        if dx > 0 & dy < 0:
+            self.direction = 180 + math.degrees(math.atan(-dy / dx))
+            return
+        if dx > 0 & dy > 0:
+            self.direction = 90 + math.degrees(math.atan(dy / dx))
+            return
+        if dx < 0 & dy > 0:
+            self.direction = 0 + math.degrees(math.atan(dy / -dx))
+            return
+
+        return
+
+# ---------------------------------------------------------------------------------------------------------------- #
     def set_ball(self, rand):
         """
         sets the ball in one half of the field either randomly (beginning of the game) or into one half (after a goal)
@@ -114,6 +146,7 @@ class Ball:
         :return: void
         """
         self.update_position()
+        self.update_direction()
 
         if len(self.path) < 5:
             self.calculate_path()

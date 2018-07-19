@@ -11,9 +11,9 @@ from time import sleep
 # globals
 matrix = Matrix()
 bresenham = Bla(matrix)
+ball = Ball(bresenham)
 player1 = Player(1)
 player2 = Player(2)
-ball = Ball(bresenham)
 wins = False
 
 start_button = 38
@@ -37,7 +37,7 @@ def setup_gpio():
         GPIO.setup(p, GPIO.OUT)
 
     # pin setup for buttons
-    GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     return
@@ -146,12 +146,12 @@ def take_and_process_picture():
     left = cv2.resize(left, (32, 32))
     right = cv2.resize(right, (32, 32))
 
-    # Defining the skin color range and calculating if these values lie in that
-    skin_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
-    skin_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
+    # Defining the red color range and calculating if these values lie in that
+    red_lower = np.array([0, 0, 150])      # ([0.5*255, 0.6*255, 0.7*255], np.uint8)
+    red_upper = np.array([20, 20, 255])    # ([0.6*255, 0.7*255, 0.8*255], np.uint8)
     # get the mask
-    left_mask = cv2.inRange(left, skin_lower, skin_upper)
-    right_mask = cv2.inRange(right, skin_lower, skin_upper)
+    left_mask = cv2.inRange(left, red_lower, red_upper)
+    right_mask = cv2.inRange(right, red_lower, red_upper)
     # apply mask
     left_hand = cv2.bitwise_and(left, left, mask=left_mask)
     right_hand = cv2.bitwise_and(right, right, mask=right_mask)
@@ -172,8 +172,14 @@ def take_and_process_picture():
     left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
     right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
 
+    left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
+    right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
+
     left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
     right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
+
+    print(left_contours)
+    print(right_contours)
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
@@ -294,24 +300,26 @@ def display_board():
     matrix.draw_line_vertical(31, 20, 31)          # green
 
     matrix.draw_circle(31, 16)                     # green
-    matrix.draw_pixel(31, 16)                      # green
+    matrix.draw_pixel(31, 16, "+")                 # green
 
-    matrix.draw_pixel(ball.x, ball.y)              # blue      ball
+    matrix.draw_pixel(ball.x, ball.y, "O")         # blue      ball
 
     for x, y in (player1.x, player1.y):            # orange    player 1
-        matrix.draw_pixel(x, y)                    #
+        matrix.draw_pixel(x, y, "1")               #
 
     for x, y in (player2.x, player2.y):            # purple    player 2
-        matrix.draw_pixel(x, y)                    #
+        matrix.draw_pixel(x, y, "2")               #
 
-    print("-------------------------------------------------------------------------\n")
-    print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
-    print("heading: " + ball.direction + ".\n")
-    print("Player 1 is on position: ")
-    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player1.x, player1.y))
-    print("Player 2 is on position: ")
-    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player2.x, player2.y))
-    print("-------------------------------------------------------------------------\n")
+    print(matrix.field())
+
+    # print("-------------------------------------------------------------------------\n")
+    # print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
+    # print("heading: " + ball.direction + ".\n")
+    # print("Player 1 is on position: ")
+    # print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player1.x, player1.y))
+    # print("Player 2 is on position: ")
+    # print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player2.x, player2.y))
+    # print("-------------------------------------------------------------------------\n")
 
     return
 
@@ -319,17 +327,34 @@ def display_board():
 # ---------------------------------------------------------------------------------------------------------------- #
 def move_ball():
     """
-    1. ball is moved
-    2. check if it is a gaol
-    3. check if a player hit the ball - if yes calculate a new path of the ball
+    1. check if a player hit the ball
+    2. ball is moved
+    3. check if it is a gaol
+    4. check if a player hit the ball
     :return:
     """
+    # hit?
+    hit_ball()
+
     ball.move()
+
     # goal?
     scored = matrix.is_goal(ball.x, ball.y)
     if scored != -1:
         goal(scored)
 
+    # hit?
+    hit_ball()
+
+    return
+
+
+# ---------------------------------------------------------------------------------------------------------------- #
+def hit_ball():
+    """
+    1. check if a player hit the ball - if yes calculate a new path of the ball
+    :return:
+    """
     # hit?
     a = player1.x[0] == ball.x & player1.y[0] == ball.y
     b = player1.x[1] == ball.x & player1.y[1] == ball.y
