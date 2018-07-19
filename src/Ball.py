@@ -10,12 +10,20 @@ class Ball:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def __init__(self, bresenham):
+        """
+        seeds the random with default seed (current time)
+        :param bresenham: an instance of the bresenham line algorithm which is used for the path calculation
+        """
         random.seed()
         self.set_ball(-1)
         self.bresenham = bresenham
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def update_position(self):
+        """
+        position is set to the next position of the path
+        :return: void
+        """
         point = self.path[0]
         self.x = point.x
         self.y = point.y
@@ -28,6 +36,12 @@ class Ball:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def set_ball(self, rand):
+        """
+        sets the ball in one half of the field either randomly (beginning of the game) or into one half (after a goal)
+        :param rand: is -1 when it should be set randomly, else is either 0 or 1
+                     so it is set in that players half of the field
+        :return: void
+        """
         if rand == -1:
             start = random.randint(0, 1)
         else:
@@ -46,17 +60,27 @@ class Ball:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def hit_ball(self):
-        # hit results in returning the ball by random angle
+        """
+        hit results in changing the balls direction by random angle
+        it also calculates the balls new path according to its new angle
+        :return: void
+        """
         rnd = random.randint(-40, 40)
         add_angle = 180 + rnd
         self.direction = (self.direction + add_angle) % 360
+
+        self.calculate_path()
 
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def calculate_path(self):
-        # simulates the future movement of the ball
-        # update path
+        """
+        simulates the future movement of the ball
+        by setting its path
+        the method terminates when the length of path reaches more than 10 (-> bresenham)
+        :return: void
+        """
         units = 10
         x = self.x + int(math.sin(math.radians(self.direction))) * units
         y = self.y + int(math.cos(math.radians(self.direction))) * units
@@ -84,6 +108,11 @@ class Ball:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def move(self):
+        """
+        sets the balls position to its next and checks if the path length is still bigger than 5
+        if not the path is calculated again according to the current direction and position
+        :return: void
+        """
         self.update_position()
 
         if len(self.path) < 5:

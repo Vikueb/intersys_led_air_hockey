@@ -23,14 +23,14 @@ class BresenhamsLineAlgorithm:
             if dy > 0:
                 # startpoint is higher as endpoint
                 for p in range(start_y - end_y):
-                    if self.out_of_range(start_x, start_y - p):
+                    if self.out_of_range(start_x, start_y - p, len(path)):
                         return self.solve_collision(start_x, start_y, path, start_x, start_y - p, 'x')
                     path.append(self.matrix[start_x][start_y - p])
             else:
                 if dy < 0:
                     # startpoint is lower as endpoint
                     for p in range(abs(start_y - end_y)):
-                        if self.out_of_range(start_x, start_y + p):
+                        if self.out_of_range(start_x, start_y + p, len(path)):
                             return self.solve_collision(start_x, start_y, path, start_x, start_y + p, 'x')
                         path.append(self.matrix[start_x][start_y + p])
             return path
@@ -39,14 +39,14 @@ class BresenhamsLineAlgorithm:
             if dx > 0:
                 # startpoint is further right than endpoint
                 for p in range(start_x - end_x):
-                    if self.out_of_range(start_x - p, start_y):
+                    if self.out_of_range(start_x - p, start_y, len(path)):
                         return self.solve_collision(start_x, start_y, path, start_x - p, start_y, 'y')
                     path.append(self.matrix[start_x - p][start_y])
             else:
                 if dx < 0:
                     # startpoint is further left than endpoint
                     for p in range(abs(start_x - end_x)):
-                        if self.out_of_range(start_x + p, start_y):
+                        if self.out_of_range(start_x + p, start_y, len(path)):
                             return self.solve_collision(start_x, start_y, path, start_x + p, start_y, 'y')
                         path.append(self.matrix[start_x + p][start_y])
             return path
@@ -59,7 +59,7 @@ class BresenhamsLineAlgorithm:
                 # startpoint further left than endpoint
                 if dx < 0:
                     for p in range(abs(start_x - end_x)):
-                        if self.out_of_range(start_x + p, y):
+                        if self.out_of_range(start_x + p, y, len(path)):
                             return self.solve_collision(start_x, start_y, path, start_x + p, y, 'y')
                         path.append(self.matrix[start_x + p][y])
                         err += derr
@@ -73,7 +73,7 @@ class BresenhamsLineAlgorithm:
                     # startpoint further right than endpoint
                     if dx > 0:
                         for p in range(start_x - end_x):
-                            if self.out_of_range(start_x - p, y):
+                            if self.out_of_range(start_x - p, y, len(path)):
                                 return self.solve_collision(start_x, start_y, path, start_x - p, y, 'y')
                             path.append(self.matrix[start_x - p][y])
                             err += derr
@@ -89,7 +89,7 @@ class BresenhamsLineAlgorithm:
                 # startpoint lower than endpoint
                 if dy < 0:
                     for p in range(abs(start_y - end_y)):
-                        if self.out_of_range(x, start_y + p):
+                        if self.out_of_range(x, start_y + p, len(path)):
                             return self.solve_collision(start_x, start_y, path, x, start_y + p, 'x')
                         path.append(self.matrix[x][start_y + p])
                         err += derr
@@ -102,7 +102,7 @@ class BresenhamsLineAlgorithm:
                     # startpoint higher than endpoint
                     if dy > 0:
                         for p in range(start_y - end_y):
-                            if self.out_of_range(x, start_y - p):
+                            if self.out_of_range(x, start_y - p, len(path)):
                                 return self.solve_collision(start_x, start_y, path, x, start_y - p, 'x')
                             path.append(self.matrix[x][start_y - p])
                             err += derr
@@ -115,15 +115,15 @@ class BresenhamsLineAlgorithm:
         return path
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def out_of_range(self, x, y):
-        return x < 0 | y < 0 | x > self.max_x | y > self.max_y
+    def out_of_range(self, x, y, l):
+        return x < 0 | y < 0 | x > self.max_x | y > self.max_y | l > 10
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def solve_collision(self, start_x, start_y, path, collision_x, collision_y, x_or_y):
 
         # to not diverge, keeping looks in the future short
         if len(path) > 10:
-            return
+            return path
 
         if not self.corner(collision_x, collision_y):
             if x_or_y == 'x':

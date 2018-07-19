@@ -321,7 +321,7 @@ def move_ball():
     """
     1. ball is moved
     2. check if it is a gaol
-    3. check if a player hit the ball - if yes calculate a new path of the goal
+    3. check if a player hit the ball - if yes calculate a new path of the ball
     :return:
     """
     ball.move()
@@ -336,7 +336,7 @@ def move_ball():
     c = player1.x[2] == ball.x & player1.y[2] == ball.y
     d = player1.x[3] == ball.x & player1.y[3] == ball.y
     if a | b | c | d:
-        ball.calculate_path()
+        ball.hit_ball()
         print("player 1 hit the ball\n")
 
     a = player2.x[0] == ball.x & player2.y[0] == ball.y
@@ -344,7 +344,7 @@ def move_ball():
     c = player2.x[2] == ball.x & player2.y[2] == ball.y
     d = player2.x[3] == ball.x & player2.y[3] == ball.y
     if a | b | c | d:
-        ball.calculate_path()
+        ball.hit_ball()
         print("player 2 hit the ball\n")
 
     return
