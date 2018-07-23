@@ -40,4 +40,3 @@ class Player:
             self.y[3] = new_y-1
 
         return
-

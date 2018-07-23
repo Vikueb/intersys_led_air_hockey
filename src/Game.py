@@ -76,6 +76,7 @@ def loop():
         # keep playing until exit button or stop button are pressed
         if exit_button.is_pressed:
             print("The Game is being turned off because you hit the exit button!\n")
+            GPIO.cleanup()
             exit()
         else:
             if start_button.is_pressed:
@@ -418,3 +419,4 @@ while not exit_button.is_pressed:
 
 print("game was ended!")
 GPIO.cleanup()
+exit()
