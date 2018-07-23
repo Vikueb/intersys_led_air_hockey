@@ -295,9 +295,8 @@ def display_board():
     """
     # colors
     g = (0, 255, 0)
-    r = (255, 0, 0)
     b = (0, 0, 255)
-    p = (150, 0, 150)
+    pu = (150, 0, 150)
     o = (180, 120, 0)
 
     matrix.draw_goals()                               # red
@@ -317,11 +316,11 @@ def display_board():
 
     matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
 
-    for x, y in (player1.x, player1.y):               # orange    player 1
-        matrix.draw_pixel(x, y, "1", o)               #
+    for i in range(4):                                # orange    player 1
+        matrix.draw_pixel(player1.x[i], player1.y[i], "1", o)
 
-    for x, y in (player2.x, player2.y):               # purple    player 2
-        matrix.draw_pixel(x, y, "2", p)               #
+    for i in range(4):                                # purple    player 2
+        matrix.draw_pixel(player2.x[i], player2.y[i], "2", pu)
 
     print(matrix.field())
 
