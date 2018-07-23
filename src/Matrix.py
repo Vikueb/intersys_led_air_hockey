@@ -1,7 +1,6 @@
 import numpy as np
 import random
 import RPi.GPIO as GPIO
-from time import sleep
 
 
 class Matrix:
@@ -66,7 +65,6 @@ class Matrix:
         GPIO.output(self.pins[6], GPIO.HIGH)
 
         GPIO.output(self.pins[1], GPIO.HIGH)
-        # sleep(0.5)
         GPIO.output(self.pins[1], GPIO.LOW)
 
         GPIO.output(self.pins[7], GPIO.LOW)
@@ -102,8 +100,8 @@ class Matrix:
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
         # color red
-        self.draw_line_vertical(0,  self.goal_player1[1][0], self.goal_player1[1][len(self.goal_player1[1]-1)], (255, 0, 0))
-        self.draw_line_vertical(63, self.goal_player2[1][0], self.goal_player2[1][len(self.goal_player2[1]-1)], (255, 0, 0))
+        self.draw_line_vertical(0,  self.goal_player1[1][0], self.goal_player1[1][len(self.goal_player1[1])-1], (255, 0, 0))
+        self.draw_line_vertical(63, self.goal_player2[1][0], self.goal_player2[1][len(self.goal_player2[1])-1], (255, 0, 0))
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
