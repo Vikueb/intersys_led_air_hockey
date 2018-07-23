@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +17,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="321" column="40" lean-forward="true" selection-start-line="321" selection-start-column="40" selection-end-line="321" selection-end-column="40" />
+            <state relative-caret-position="357">
+              <caret line="190" column="46" lean-forward="true" selection-start-line="190" selection-start-column="46" selection-end-line="190" selection-end-column="46" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -29,8 +29,8 @@
       <file leaf-file-name="Matrix.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="40" column="20" lean-forward="true" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+            <state relative-caret-position="272">
+              <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -78,8 +78,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/BresenhamsLineAlgorithm.py" />
         <option value="$PROJECT_DIR$/src/Player.py" />
-        <option value="$PROJECT_DIR$/src/Game.py" />
         <option value="$PROJECT_DIR$/src/Ball.py" />
+        <option value="$PROJECT_DIR$/src/Game.py" />
         <option value="$PROJECT_DIR$/src/Matrix.py" />
       </list>
     </option>
@@ -146,6 +146,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.119072706" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -422,16 +423,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="321" column="40" lean-forward="true" selection-start-line="321" selection-start-column="40" selection-end-line="321" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Ball.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -442,10 +433,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="190" column="46" lean-forward="true" selection-start-line="190" selection-start-column="46" selection-end-line="190" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="40" column="20" lean-forward="true" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+        <state relative-caret-position="272">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

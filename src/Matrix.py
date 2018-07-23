@@ -48,19 +48,17 @@ class Matrix:
         #        [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,    12]
         self.field[x][y] = string
 
-        GPIO.output(self.pins[2], GPIO.HIGH)
-        GPIO.output(self.pins[3], GPIO.HIGH)
-        GPIO.output(self.pins[4], GPIO.HIGH)
-        GPIO.output(self.pins[5], GPIO.HIGH)
-        GPIO.output(self.pins[6], GPIO.HIGH)
+        pins = random.shuffle(self.pins)
+
+        for p in pins:
+            GPIO.output(p, GPIO.HIGH)
+
         GPIO.output(self.pins[12], GPIO.HIGH)
 
         GPIO.output(self.pins[12], GPIO.LOW)
-        GPIO.output(self.pins[6], GPIO.LOW)
-        GPIO.output(self.pins[5], GPIO.LOW)
-        GPIO.output(self.pins[4], GPIO.LOW)
-        GPIO.output(self.pins[3], GPIO.LOW)
-        GPIO.output(self.pins[2], GPIO.LOW)
+
+        for p in pins:
+            GPIO.output(p, GPIO.LOW)
 
         return
 
