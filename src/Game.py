@@ -4,43 +4,35 @@ from Player import Player
 from Ball import Ball
 import cv2
 import RPi.GPIO as GPIO
+from gpiozero import Button
 from picamera import PiCamera, array
 import numpy as np
 from time import sleep
 
+# setup GPIO
+# pin setup for matrix
+# http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
+# print("setting up GPIO")
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+#      [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
+pins = [7,   11,    12, 15, 16, 18, 22, 23, 13, 26, 24, 21, 19]
+for p in pins:
+    GPIO.setup(p, GPIO.OUT)
+
+# pin setup for buttons
+start_button = Button(38)
+exit_button = Button(40)
+
 # globals
-matrix = Matrix()
+matrix = Matrix(pins)
 bresenham = Bla(matrix)
 ball = Ball(bresenham)
 player1 = Player(1)
 player2 = Player(2)
 wins = False
 
-start_button = 38
-exit_button = 40
 camera = PiCamera()
-
-
-# ---------------------------------------------------------------------------------------------------------------- #
-def setup_gpio():
-    """
-    Does the setup for all GPIO Pins, except for the two buttons, as they have to be set globally
-    :return: when setup is completed
-    """
-    # pin setup for matrix
-    # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
-    print("setting up GPIO")
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setwarnings(False)
-    pins = [7, 11, 13, 15, 19, 21, 23, 12, 16, 18, 22, 24, 26]
-    for p in pins:
-        GPIO.setup(p, GPIO.OUT)
-
-    # pin setup for buttons
-    GPIO.setup(start_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(exit_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-    return
 
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -50,14 +42,12 @@ def standby():
     When the start button is pressed it waits for both players to be ready.
     :return: when 'start' was pressed and both players are registered
     """
-    start_input = GPIO.input(start_button)
     # just light the edges of the matrix
     # until start button is pushed
-    while not start_input:
+    while not start_button.is_pressed():
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
-        start_input = GPIO.input(start_button)
 
     # then register players
     while True:
@@ -78,14 +68,12 @@ def loop():
     :return: when 'start'/ 'stop' button was pressed again
     """
     while not globals()['wins']:
-        start_input = GPIO.input(start_button)
-        exit_input = GPIO.input(exit_button)
         # keep playing until exit button or stop button are pressed
-        if exit_input:
+        if exit_button.is_pressed():
             print("The Game is being turned off because you hit the exit button!\n")
             exit()
         else:
-            if start_input:
+            if start_button.is_pressed():
                 print("returning to standby mode because the stop button was pressed!\n")
                 return
 
@@ -287,28 +275,35 @@ def display_board():
     displays the field/ board (outer lines, middle, goals, ball & players)
     :return: void
     """
-    matrix.draw_goals()                            # red
+    # colors
+    g = (0, 255, 0)
+    r = (255, 0, 0)
+    b = (0, 0, 255)
+    p = (150, 0, 150)
+    o = (180, 120, 0)
 
-    matrix.draw_line_horizontal(0, 63, 0)          # green     outer line
-    matrix.draw_line_horizontal(0, 63, 31)         # green
-    matrix.draw_line_vertical(0, 0, 11)            # green
-    matrix.draw_line_vertical(0, 20, 31)           # green
-    matrix.draw_line_vertical(63, 0, 11)           # green
-    matrix.draw_line_vertical(63, 20, 31)          # green
+    matrix.draw_goals()                               # red
 
-    matrix.draw_line_vertical(31, 0, 11)           # green     middle line
-    matrix.draw_line_vertical(31, 20, 31)          # green
+    matrix.draw_line_horizontal(0, 63, 0, g)          # green     outer line
+    matrix.draw_line_horizontal(0, 63, 31, g)         # green
+    matrix.draw_line_vertical(0, 0, 11, g)            # green
+    matrix.draw_line_vertical(0, 20, 31, g)           # green
+    matrix.draw_line_vertical(63, 0, 11, g)           # green
+    matrix.draw_line_vertical(63, 20, 31, g)          # green
 
-    matrix.draw_circle(31, 16)                     # green
-    matrix.draw_pixel(31, 16, "+")                 # green
+    matrix.draw_line_vertical(31, 0, 11, g)           # green     middle line
+    matrix.draw_line_vertical(31, 20, 31, g)          # green
 
-    matrix.draw_pixel(ball.x, ball.y, "O")         # blue      ball
+    matrix.draw_circle(31, 16, g)                     # green
+    matrix.draw_pixel(31, 16, "+", g)                 # green
 
-    for x, y in (player1.x, player1.y):            # orange    player 1
-        matrix.draw_pixel(x, y, "1")               #
+    matrix.draw_pixel(ball.x, ball.y, "O", b)         # blue      ball
 
-    for x, y in (player2.x, player2.y):            # purple    player 2
-        matrix.draw_pixel(x, y, "2")               #
+    for x, y in (player1.x, player1.y):               # orange    player 1
+        matrix.draw_pixel(x, y, "1", o)               #
+
+    for x, y in (player2.x, player2.y):               # purple    player 2
+        matrix.draw_pixel(x, y, "2", p)               #
 
     print(matrix.field())
 

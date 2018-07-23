@@ -1,14 +1,17 @@
 import numpy as np
 import random
 import RPi.GPIO as GPIO
+from time import sleep
 
 
 class Matrix:
 
-    def __init__(self):
+    def __init__(self, pins):
         """
         the matrix is a 32 times 64 array where x_Max is 31 and y_Max is 63 (because indexes start with 0)
         """
+        # pins : [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
+        self.pins = pins
         self.x_Max = 63
         self.y_Max = 31
         self.goal_player1 = (0, np.arange(12, 20, 1))
@@ -37,30 +40,47 @@ class Matrix:
         return field
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def draw_pixel(self, x, y, string):
+    def draw_pixel(self, x, y, string, color):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
+        # pins : [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
+        #        [  0,     1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]
         self.field[y][x] = string
+        GPIO.output(self.pins[7], GPIO.HIGH)
+        GPIO.output(self.pins[3], GPIO.HIGH)
+        GPIO.output(self.pins[4], GPIO.HIGH)
+        GPIO.output(self.pins[5], GPIO.HIGH)
+        GPIO.output(self.pins[6], GPIO.HIGH)
+
+        GPIO.output(self.pins[1], GPIO.HIGH)
+        sleep(0.5)
+        GPIO.output(self.pins[1], GPIO.LOW)
+
+        GPIO.output(self.pins[7], GPIO.LOW)
+        GPIO.output(self.pins[3], GPIO.LOW)
+        GPIO.output(self.pins[4], GPIO.LOW)
+        GPIO.output(self.pins[5], GPIO.LOW)
+        GPIO.output(self.pins[6], GPIO.LOW)
 
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def draw_line_vertical(self, x, y_up, y_down):
+    def draw_line_vertical(self, x, y_up, y_down, color):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
         line = np.arange(y_up, y_down + 1, 1)
         for y in line:
-            self.draw_pixel(x, y, "|")
+            self.draw_pixel(x, y, "|", color)
 
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def draw_line_horizontal(self, x_left, x_right, y):
+    def draw_line_horizontal(self, x_left, x_right, y, color):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
         line = np.arange(x_left, x_right+1, 1)
         for x in line:
-            self.draw_pixel(x, y, "-")
+            self.draw_pixel(x, y, "-", color)
 
         return
 
@@ -69,8 +89,8 @@ class Matrix:
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
         # color red
-        self.draw_line_vertical(0,  self.goal_player1[1][0], self.goal_player1[1][len(self.goal_player1[1]-1)])
-        self.draw_line_vertical(63, self.goal_player2[1][0], self.goal_player2[1][len(self.goal_player2[1]-1)])
+        self.draw_line_vertical(0,  self.goal_player1[1][0], self.goal_player1[1][len(self.goal_player1[1]-1)], (255, 0, 0))
+        self.draw_line_vertical(63, self.goal_player2[1][0], self.goal_player2[1][len(self.goal_player2[1]-1)], (255, 0, 0))
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
@@ -82,47 +102,47 @@ class Matrix:
         green = random.randint(0, 255)
         blue = random.randint(0, 255)
 
-        self.draw_line_vertical(0, 0, 31)
-        self.draw_line_vertical(63, 0, 31)
-        self.draw_line_horizontal(0, 63, 0)
-        self.draw_line_horizontal(0, 63, 31)
+        self.draw_line_vertical(0, 0, 31, (red, green, blue))
+        self.draw_line_vertical(63, 0, 31, (red, green, blue))
+        self.draw_line_horizontal(0, 63, 0, (red, green, blue))
+        self.draw_line_horizontal(0, 63, 31, (red, green, blue))
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def draw_circle(self, x_middle, y_middle):
+    def draw_circle(self, x_middle, y_middle, color):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
         # r = 5, color = green
         # upper half
-        self.draw_pixel(x_middle + 5, y_middle, "|")
-        self.draw_pixel(x_middle + 5, y_middle + 1, "\\")
-        self.draw_pixel(x_middle + 4, y_middle + 2, "|")
-        self.draw_pixel(x_middle + 4, y_middle + 3, "\\")
-        self.draw_pixel(x_middle + 3, y_middle + 4, "-")
-        self.draw_pixel(x_middle + 2, y_middle + 4, "\\")
-        self.draw_pixel(x_middle + 1, y_middle + 5, "-")
-        self.draw_pixel(x_middle + 0, y_middle + 5, "-")
-        self.draw_pixel(x_middle - 1, y_middle + 5, "-")
-        self.draw_pixel(x_middle - 2, y_middle + 4, "/")
-        self.draw_pixel(x_middle - 3, y_middle + 4, "-")
-        self.draw_pixel(x_middle - 4, y_middle + 3, "/")
-        self.draw_pixel(x_middle - 4, y_middle + 2, "|")
-        self.draw_pixel(x_middle - 5, y_middle + 1, "/")
+        self.draw_pixel(x_middle + 5, y_middle, "|", color)
+        self.draw_pixel(x_middle + 5, y_middle + 1, "\\", color)
+        self.draw_pixel(x_middle + 4, y_middle + 2, "|", color)
+        self.draw_pixel(x_middle + 4, y_middle + 3, "\\", color)
+        self.draw_pixel(x_middle + 3, y_middle + 4, "-", color)
+        self.draw_pixel(x_middle + 2, y_middle + 4, "\\", color)
+        self.draw_pixel(x_middle + 1, y_middle + 5, "-", color)
+        self.draw_pixel(x_middle + 0, y_middle + 5, "-", color)
+        self.draw_pixel(x_middle - 1, y_middle + 5, "-", color)
+        self.draw_pixel(x_middle - 2, y_middle + 4, "/", color)
+        self.draw_pixel(x_middle - 3, y_middle + 4, "-", color)
+        self.draw_pixel(x_middle - 4, y_middle + 3, "/", color)
+        self.draw_pixel(x_middle - 4, y_middle + 2, "|", color)
+        self.draw_pixel(x_middle - 5, y_middle + 1, "/", color)
         # lower half
-        self.draw_pixel(x_middle - 5, y_middle, "|")
-        self.draw_pixel(x_middle - 5, y_middle - 1, "\\")
-        self.draw_pixel(x_middle - 4, y_middle - 2, "|")
-        self.draw_pixel(x_middle - 4, y_middle - 3, "\\")
-        self.draw_pixel(x_middle - 3, y_middle - 4, "-")
-        self.draw_pixel(x_middle - 2, y_middle - 4, "\\")
-        self.draw_pixel(x_middle - 1, y_middle - 5, "-")
-        self.draw_pixel(x_middle - 0, y_middle - 5, "-")
-        self.draw_pixel(x_middle + 1, y_middle - 5, "-")
-        self.draw_pixel(x_middle + 2, y_middle - 4, "/")
-        self.draw_pixel(x_middle + 3, y_middle - 4, "-")
-        self.draw_pixel(x_middle + 4, y_middle - 3, "/")
-        self.draw_pixel(x_middle + 4, y_middle - 2, "|")
-        self.draw_pixel(x_middle + 5, y_middle - 1, "/")
+        self.draw_pixel(x_middle - 5, y_middle, "|", color)
+        self.draw_pixel(x_middle - 5, y_middle - 1, "\\", color)
+        self.draw_pixel(x_middle - 4, y_middle - 2, "|", color)
+        self.draw_pixel(x_middle - 4, y_middle - 3, "\\", color)
+        self.draw_pixel(x_middle - 3, y_middle - 4, "-", color)
+        self.draw_pixel(x_middle - 2, y_middle - 4, "\\", color)
+        self.draw_pixel(x_middle - 1, y_middle - 5, "-", color)
+        self.draw_pixel(x_middle - 0, y_middle - 5, "-", color)
+        self.draw_pixel(x_middle + 1, y_middle - 5, "-", color)
+        self.draw_pixel(x_middle + 2, y_middle - 4, "/", color)
+        self.draw_pixel(x_middle + 3, y_middle - 4, "-", color)
+        self.draw_pixel(x_middle + 4, y_middle - 3, "/", color)
+        self.draw_pixel(x_middle + 4, y_middle - 2, "|", color)
+        self.draw_pixel(x_middle + 5, y_middle - 1, "/", color)
 
         return
 
