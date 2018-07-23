@@ -171,6 +171,9 @@ def take_and_process_picture():
     _, left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+    print(left_contours)
+    print(right_contours)
+
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
     if not left_contours == []:
