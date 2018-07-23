@@ -53,7 +53,7 @@ class Matrix:
         GPIO.output(self.pins[6], GPIO.HIGH)
 
         GPIO.output(self.pins[1], GPIO.HIGH)
-        sleep(0.5)
+        # sleep(0.5)
         GPIO.output(self.pins[1], GPIO.LOW)
 
         GPIO.output(self.pins[7], GPIO.LOW)
