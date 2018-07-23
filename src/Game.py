@@ -329,12 +329,12 @@ def display_board():
     # print(matrix.field)
 
     print("-------------------------------------------------------------------------\n")
-    print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
-    print("heading: " + ball.direction + ".\n")
+    print("displaying board with ball at: (", ball.x, ",", ball.y, ")\n")
+    print("heading: ", ball.direction, ".\n")
     print("Player 1 is on position: ")
-    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player1.x, player1.y))
+    print("(", player1.x[0], ",", player1.y[0], ")\n")
     print("Player 2 is on position: ")
-    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player2.x, player2.y))
+    print("(", player2.x[0], ",", player2.y[0], ")\n")
     print("-------------------------------------------------------------------------\n")
 
     return
