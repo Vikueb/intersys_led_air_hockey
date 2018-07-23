@@ -321,7 +321,7 @@ def display_board():
         y = int(player2.y[i])
         matrix.draw_pixel(x, y, "2", pu)
 
-    matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
+    matrix.draw_pixel(ball.x, ball.y, "O", b)         # blue      ball
 
     # print(matrix.field)
 
