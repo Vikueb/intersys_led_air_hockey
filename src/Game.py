@@ -167,8 +167,8 @@ def take_and_process_picture():
     left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
     right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
 
-    left_contours = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
-    right_contours = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[1]
+    _, left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    _, right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     print(left_contours[0:5])
     print(right_contours[0:5])
