@@ -27,8 +27,8 @@ class Ball:
         if len(self.path) == 0:
             return False
         point = self.path[0]
-        self.x = point.x
-        self.y = point.y
+        self.x = point.x if point.x < 64 else 63
+        self.y = point.y if point.y < 32 else 31
 
         for i in range(len(self.path) - 1):
             if i != 0:
