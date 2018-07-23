@@ -171,6 +171,9 @@ def take_and_process_picture():
     _, left_contours, _ = cv2.findContours(left_hand, 1, 2)     # cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, 1, 2)   # cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+    print(left_contours)
+    print(right_contours)
+
     left_contours = np.asarray(left_contours, dtype=np.uint8)
     left_contours = np.reshape(left_contours, [-1, 2])
     right_contours = np.asarray(right_contours, dtype=np.uint8)

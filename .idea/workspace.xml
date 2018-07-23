@@ -16,8 +16,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="173" column="76" selection-start-line="173" selection-start-column="76" selection-end-line="173" selection-end-column="76" />
+            <state relative-caret-position="352">
+              <caret line="185" column="29" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -145,7 +145,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="862" y="19" width="1017" height="1000" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2308478" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -444,8 +443,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="173" column="76" selection-start-line="173" selection-start-column="76" selection-end-line="173" selection-end-column="76" />
+        <state relative-caret-position="352">
+          <caret line="185" column="29" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
