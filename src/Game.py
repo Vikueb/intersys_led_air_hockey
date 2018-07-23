@@ -165,8 +165,8 @@ def take_and_process_picture():
     left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
     right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
 
-    left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
-    right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
+    _, left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
+    _, right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
 
     print(cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE))
 
