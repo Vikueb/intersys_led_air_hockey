@@ -115,7 +115,7 @@ def take_and_process_picture():
     # https://raspberrypi.stackexchange.com/questions/24232/picamera-taking-pictures-fast-and-processing-them
 
     # capture picture into stream
-    stream = array.PiBGRArray(camera)
+    stream = array.PiRGBArray(camera)
     camera.resolution = (640, 320)      # (x,y)
     camera.start_preview()
     sleep(0.5)
