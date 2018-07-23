@@ -152,6 +152,8 @@ class Ball:
             if len(self.path) < 5:
                 self.calculate_path()
 
+        print(self.x, self.y)
+
         return
 
 
