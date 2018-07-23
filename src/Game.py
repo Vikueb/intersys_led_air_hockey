@@ -44,10 +44,14 @@ def standby():
     """
     # just light the edges of the matrix
     # until start button is pushed
+    c = 20
     while not start_button.is_pressed:
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
+        c -= 1
+        if c < 1:
+            break
 
     # then register players
     while True:

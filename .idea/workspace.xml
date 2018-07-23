@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.py" afterDir="false" />
-    </list>
+    <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +14,8 @@
       <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="398" column="34" selection-start-line="398" selection-start-column="34" selection-end-line="398" selection-end-column="34" />
+            <state relative-caret-position="6681">
+              <caret line="399" column="32" selection-start-line="399" selection-start-column="32" selection-end-line="399" selection-end-column="32" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -29,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/src/Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="595">
-              <caret line="63" selection-start-line="63" selection-end-line="63" />
+              <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -78,12 +76,12 @@
         <option value="$PROJECT_DIR$/src/Player.py" />
         <option value="$PROJECT_DIR$/src/BresenhamsLineAlgorithm.py" />
         <option value="$PROJECT_DIR$/src/Ball.py" />
-        <option value="$PROJECT_DIR$/src/Matrix.py" />
         <option value="$PROJECT_DIR$/src/Game.py" />
+        <option value="$PROJECT_DIR$/src/Matrix.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="862" />
     <option name="y" value="19" />
     <option name="width" value="1017" />
@@ -435,7 +433,7 @@
     <entry file="file://$PROJECT_DIR$/src/Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -444,8 +442,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="398" column="34" selection-start-line="398" selection-start-column="34" selection-end-line="398" selection-end-column="34" />
+        <state relative-caret-position="6681">
+          <caret line="399" column="32" selection-start-line="399" selection-start-column="32" selection-end-line="399" selection-end-column="32" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
