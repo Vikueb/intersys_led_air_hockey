@@ -317,10 +317,14 @@ def display_board():
     matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
 
     for i in range(4):                                # orange    player 1
-        matrix.draw_pixel(player1.x[i], player1.y[i], "1", o)
+        x = int(player1.x[i])
+        y = int(player1.y[i])
+        matrix.draw_pixel(x, y, "1", o)
 
     for i in range(4):                                # purple    player 2
-        matrix.draw_pixel(player2.x[i], player2.y[i], "2", pu)
+        x = int(player2.x[i])
+        y = int(player2.y[i])
+        matrix.draw_pixel(x, y, "2", pu)
 
     print(matrix.field())
 
