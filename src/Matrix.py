@@ -35,7 +35,7 @@ class Matrix:
         :return: the empty array
         """
 
-        field = np.chararray((self.y_Max, self.x_Max))
+        field = np.chararray((self.y_Max+1, self.x_Max+1))
 
         return field
 
