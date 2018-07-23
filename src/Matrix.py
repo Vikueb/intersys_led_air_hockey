@@ -48,6 +48,9 @@ class Matrix:
     def field(self):
 
         field = np.chararray((self.y_Max+1, self.x_Max+1))
+        for i in range(len(field)):
+            for j in range(len(field[i])):
+                field[i][j] = " "
         print(field.shape)
 
         return field
@@ -62,9 +65,9 @@ class Matrix:
         GPIO.output(self.pins[7], GPIO.HIGH)
         GPIO.output(self.pins[10], GPIO.HIGH)
         GPIO.output(self.pins[3], GPIO.HIGH)
-        # GPIO.output(self.pins[4], GPIO.HIGH)
-        # GPIO.output(self.pins[5], GPIO.HIGH)
-        # GPIO.output(self.pins[6], GPIO.HIGH)
+        GPIO.output(self.pins[4], GPIO.HIGH)
+        GPIO.output(self.pins[5], GPIO.HIGH)
+        GPIO.output(self.pins[6], GPIO.HIGH)
 
         GPIO.output(self.pins[1], GPIO.HIGH)
         GPIO.output(self.pins[1], GPIO.LOW)
@@ -72,9 +75,9 @@ class Matrix:
         GPIO.output(self.pins[7], GPIO.LOW)
         GPIO.output(self.pins[10], GPIO.LOW)
         GPIO.output(self.pins[3], GPIO.LOW)
-        # GPIO.output(self.pins[4], GPIO.LOW)
-        # GPIO.output(self.pins[5], GPIO.LOW)
-        # GPIO.output(self.pins[6], GPIO.LOW)
+        GPIO.output(self.pins[4], GPIO.LOW)
+        GPIO.output(self.pins[5], GPIO.LOW)
+        GPIO.output(self.pins[6], GPIO.LOW)
 
         return
 
