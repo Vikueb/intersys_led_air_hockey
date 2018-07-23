@@ -60,19 +60,21 @@ class Matrix:
         #        [  0,     1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]
         self.field[y][x] = string
         GPIO.output(self.pins[7], GPIO.HIGH)
+        GPIO.output(self.pins[10], GPIO.HIGH)
         GPIO.output(self.pins[3], GPIO.HIGH)
-        GPIO.output(self.pins[4], GPIO.HIGH)
-        GPIO.output(self.pins[5], GPIO.HIGH)
-        GPIO.output(self.pins[6], GPIO.HIGH)
+        # GPIO.output(self.pins[4], GPIO.HIGH)
+        # GPIO.output(self.pins[5], GPIO.HIGH)
+        # GPIO.output(self.pins[6], GPIO.HIGH)
 
         GPIO.output(self.pins[1], GPIO.HIGH)
         GPIO.output(self.pins[1], GPIO.LOW)
 
         GPIO.output(self.pins[7], GPIO.LOW)
+        GPIO.output(self.pins[10], GPIO.LOW)
         GPIO.output(self.pins[3], GPIO.LOW)
-        GPIO.output(self.pins[4], GPIO.LOW)
-        GPIO.output(self.pins[5], GPIO.LOW)
-        GPIO.output(self.pins[6], GPIO.LOW)
+        # GPIO.output(self.pins[4], GPIO.LOW)
+        # GPIO.output(self.pins[5], GPIO.LOW)
+        # GPIO.output(self.pins[6], GPIO.LOW)
 
         return
 

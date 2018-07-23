@@ -326,7 +326,7 @@ def display_board():
         y = int(player2.y[i])
         matrix.draw_pixel(x, y, "2", pu)
 
-    print(matrix.field())
+    print(matrix.field)
 
     # print("-------------------------------------------------------------------------\n")
     # print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
