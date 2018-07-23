@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="" />
+    <list default="true" id="fc9b8d66-5924-4a55-ab30-3bf70543ae43" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Game.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Game.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="328" column="22" selection-start-line="328" selection-start-column="22" selection-end-line="328" selection-end-column="22" />
+            <state relative-caret-position="306">
+              <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -23,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Matrix.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Matrix.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="52" column="33" lean-forward="true" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
+            <state relative-caret-position="391">
+              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -76,8 +79,8 @@
         <option value="$PROJECT_DIR$/src/Player.py" />
         <option value="$PROJECT_DIR$/src/BresenhamsLineAlgorithm.py" />
         <option value="$PROJECT_DIR$/src/Ball.py" />
-        <option value="$PROJECT_DIR$/src/Game.py" />
         <option value="$PROJECT_DIR$/src/Matrix.py" />
+        <option value="$PROJECT_DIR$/src/Game.py" />
       </list>
     </option>
   </component>
@@ -430,22 +433,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.py">
+    <entry file="file://$PROJECT_DIR$/src/Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="328" column="22" selection-start-line="328" selection-start-column="22" selection-end-line="328" selection-end-column="22" />
+        <state relative-caret-position="391">
+          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Matrix.py">
+    <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="52" column="33" lean-forward="true" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
+        <state relative-caret-position="306">
+          <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>

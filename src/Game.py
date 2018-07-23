@@ -49,9 +49,9 @@ def standby():
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
-        c -= 1      # TODO
-        if c < 1:
-            break
+        # c -= 1      # TODO
+        # if c < 1:
+        #     break
 
     print("start button was pressed")
     # then register players

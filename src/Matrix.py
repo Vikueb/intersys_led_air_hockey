@@ -58,11 +58,15 @@ class Matrix:
         # pins : [LAT, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2, clock]
         #        [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,    12]
         self.field[y][x] = string
-        for p in self.pins:
+        for p in self.pins[4:7]:
             GPIO.output(p, GPIO.HIGH)
 
-        for p in self.pins:
+        GPIO.output(self.pins[12], GPIO.HIGH)
+
+        for p in self.pins[4:7]:
             GPIO.output(p, GPIO.LOW)
+
+        GPIO.output(self.pins[12], GPIO.LOW)
 
         return
 
