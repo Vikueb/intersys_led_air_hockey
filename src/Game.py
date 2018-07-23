@@ -396,12 +396,10 @@ The actual game starts here!
 usage()
 
 print("let the game begin!")
-exit_input = GPIO.input(exit_button)
-while not exit_input:
+while not exit_button.is_pressed():
     standby()
     print("entering game mode now!")
     loop()
-    exit_input = GPIO.input(exit_button)
 
 print("game was ended!")
 GPIO.cleanup()
