@@ -120,7 +120,7 @@ def take_and_process_picture():
     camera.resolution = (640, 320)      # (x,y)
     camera.start_preview()
     sleep(0.5)
-    camera.capture(stream, format="bgr", use_video_port=True)
+    camera.capture(stream, format="rgb", use_video_port=True)
     camera.stop_preview()
 
     # turn data into cv2 image
@@ -140,8 +140,8 @@ def take_and_process_picture():
     right = cv2.resize(right, (32, 32))
 
     # Defining the red color range and calculating if these values lie in that
-    red_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
-    red_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
+    red_lower = np.array([120, 115, 110], np.uint8)
+    red_upper = np.array([170, 175, 180], np.uint8)
     # get the mask
     left_mask = cv2.inRange(left, red_lower, red_upper)
     right_mask = cv2.inRange(right, red_lower, red_upper)
@@ -162,8 +162,8 @@ def take_and_process_picture():
     left_hand = cv2.erode(left_hand, kernel)
     right_hand = cv2.erode(right_hand, kernel)
 
-    left_hand = cv2.cvtColor(left_hand, cv2.COLOR_BGR2GRAY)
-    right_hand = cv2.cvtColor(right_hand, cv2.COLOR_BGR2GRAY)
+    left_hand = cv2.cvtColor(left_hand, cv2.COLOR_RGB2GRAY)
+    right_hand = cv2.cvtColor(right_hand, cv2.COLOR_RGB2GRAY)
 
     _, left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
     _, right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
