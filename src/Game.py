@@ -141,8 +141,10 @@ def take_and_process_picture():
     right = cv2.resize(right, (32, 32))
 
     # Defining the red color range and calculating if these values lie in that
-    red_lower = np.array([120, 115, 110], np.uint8)
-    red_upper = np.array([170, 175, 180], np.uint8)
+    # red_lower = np.array([120, 115, 110], np.uint8)
+    # red_upper = np.array([170, 175, 180], np.uint8)
+    red_lower = np.array([200, 200, 200], np.uint8)
+    red_upper = np.array([255, 255, 255], np.uint8)
     # get the mask
     left_mask = cv2.inRange(left, red_lower, red_upper)
     right_mask = cv2.inRange(right, red_lower, red_upper)
