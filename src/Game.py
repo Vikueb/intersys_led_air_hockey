@@ -44,7 +44,7 @@ def standby():
     """
     # just light the edges of the matrix
     # until start button is pushed
-    c = 20
+    c = 3
     while not start_button.is_pressed:
         print("standby\n")
         print("please press start to start the game!")
