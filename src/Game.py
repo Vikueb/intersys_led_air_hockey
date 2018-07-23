@@ -393,7 +393,6 @@ The actual game starts here!
 2. Game is played (loop) while nobody won or the stop button is hit
 3. If the exit button is hit the table turns off
 """
-setup_gpio()
 usage()
 
 print("let the game begin!")
