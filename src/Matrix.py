@@ -17,11 +17,12 @@ class Matrix:
         self.goal_player1 = (0, np.arange(12, 20, 1))
         self.goal_player2 = (63, np.arange(12, 20, 1))
         self.field = self.field()
+        self.board = self.board()
 
         return
 
 # ---------------------------------------------------------------------------------------------------------------- #
-    def field(self):
+    def board(self):
         """
         # watch out! looks like this:
         # ---x-------------------------------------------------------- #
@@ -34,6 +35,17 @@ class Matrix:
         # ------------------------------------------------------------ #
         :return: the empty array
         """
+
+        board = []
+        for i in range(self.y_Max+1):
+            line = []
+            for j in range(self.x_Max+1):
+                line.append(self.Point(j, i))
+
+        return board
+
+# ---------------------------------------------------------------------------------------------------------------- #
+    def field(self):
 
         field = np.chararray((self.y_Max+1, self.x_Max+1))
 
@@ -170,3 +182,8 @@ class Matrix:
         return -1
 
 # ---------------------------------------------------------------------------------------------------------------- #
+    class Point:
+
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y

@@ -4,7 +4,7 @@ import math
 class BresenhamsLineAlgorithm:
 
     def __init__(self, matrix):
-        self.matrix = matrix
+        self.matrix = matrix.board
         self.max_x = matrix.x_Max
         self.max_y = matrix.y_Max
 
