@@ -22,32 +22,20 @@ class Matrix:
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def board(self):
-        """
-        # watch out! looks like this:
-        # ---x-------------------------------------------------------- #
-        # y (0,0) (1,0) (2,0) (3,0) (4,0) ...
-        # | (0,1) (1,1) (2,1) (3,1) ...
-        # | (0,2) (1,2) (2,2)  ...
-        # | (0,3) (1,3) ...
-        # | (0,4) ...
-        # | ...
-        # ------------------------------------------------------------ #
-        :return: the empty array
-        """
 
         board = []
-        for i in range(self.y_Max+1):
-            line = []
-            for j in range(self.x_Max+1):
-                line.append(self.Point(j, i))
-            board.append(line)
+        for i in range(self.x_Max+1):
+            column = []
+            for j in range(self.y_Max+1):
+                column.append(self.Point(i, j))
+            board.append(column)
 
         return board
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def field(self):
 
-        field = np.chararray((self.y_Max+1, self.x_Max+1))
+        field = np.chararray((self.x_Max+1, self.y_Max+1))
 
         return field
 
@@ -57,7 +45,7 @@ class Matrix:
         # https://github.com/hzeller/rpi-rgb-led-matrix
         # pins : [LAT, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2, clock]
         #        [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,    12]
-        self.field[y][x] = string
+        self.field[x][y] = string
         for p in self.pins[4:7]:
             GPIO.output(p, GPIO.HIGH)
 
