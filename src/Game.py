@@ -49,10 +49,11 @@ def standby():
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
-        c -= 1
+        c -= 1      # TODO
         if c < 1:
             break
 
+    print("start button was pressed")
     # then register players
     while True:
         # try to register again
@@ -166,6 +167,8 @@ def take_and_process_picture():
 
     left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
     right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
+
+    print(cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE))
 
     _, left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
