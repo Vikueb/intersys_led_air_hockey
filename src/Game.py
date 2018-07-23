@@ -369,18 +369,18 @@ def hit_ball():
     :return:
     """
     # hit?
-    a = int(player1.x[0]) == ball.x & int(player1.y[0] == ball.y)
-    b = int(player1.x[1]) == ball.x & int(player1.y[1] == ball.y)
-    c = int(player1.x[2]) == ball.x & int(player1.y[2] == ball.y)
-    d = int(player1.x[3]) == ball.x & int(player1.y[3] == ball.y)
+    a = int(player1.x[0]) == ball.x & int(player1.y[0]) == ball.y
+    b = int(player1.x[1]) == ball.x & int(player1.y[1]) == ball.y
+    c = int(player1.x[2]) == ball.x & int(player1.y[2]) == ball.y
+    d = int(player1.x[3]) == ball.x & int(player1.y[3]) == ball.y
     if a | b | c | d:
         ball.hit_ball()
         print("player 1 hit the ball\n")
 
-    a = int(player2.x[0]) == ball.x & int(player2.y[0] == ball.y)
-    b = int(player2.x[1]) == ball.x & int(player2.y[1] == ball.y)
-    c = int(player2.x[2]) == ball.x & int(player2.y[2] == ball.y)
-    d = int(player2.x[3]) == ball.x & int(player2.y[3] == ball.y)
+    a = int(player2.x[0]) == ball.x & int(player2.y[0]) == ball.y
+    b = int(player2.x[1]) == ball.x & int(player2.y[1]) == ball.y
+    c = int(player2.x[2]) == ball.x & int(player2.y[2]) == ball.y
+    d = int(player2.x[3]) == ball.x & int(player2.y[3]) == ball.y
     if a | b | c | d:
         ball.hit_ball()
         print("player 2 hit the ball\n")

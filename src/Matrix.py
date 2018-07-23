@@ -41,6 +41,7 @@ class Matrix:
             line = []
             for j in range(self.x_Max+1):
                 line.append(self.Point(j, i))
+            board.append(line)
 
         return board
 
