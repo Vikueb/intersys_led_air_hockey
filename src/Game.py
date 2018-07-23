@@ -143,6 +143,7 @@ def take_and_process_picture():
     # Defining the red color range and calculating if these values lie in that
     # red_lower = np.array([120, 115, 110], np.uint8)
     # red_upper = np.array([170, 175, 180], np.uint8)
+    # cause of light reasons it's easier to detect a light
     red_lower = np.array([200, 200, 200], np.uint8)
     red_upper = np.array([255, 255, 255], np.uint8)
     # get the mask
