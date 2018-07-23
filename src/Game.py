@@ -15,8 +15,8 @@ from time import sleep
 # print("setting up GPIO")
 # GPIO.setmode(GPIO.BCM) is automatically set by gpiozero
 GPIO.setwarnings(False)
-#      [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
-pins = [4,   17,    18, 22, 23, 24, 25, 11, 27,  7,  8,  9, 10]
+#      [LAT, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2, clock]
+pins = [4,   18, 22, 23, 24, 25, 11, 27,  7,  8,  9, 10,    17]
 for p in pins:
     GPIO.setup(p, GPIO.OUT)
 
@@ -314,8 +314,6 @@ def display_board():
     matrix.draw_circle(31, 16, g)                     # green
     matrix.draw_pixel(31, 16, "+", g)                 # green
 
-    matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
-
     for i in range(4):                                # orange    player 1
         x = int(player1.x[i])
         y = int(player1.y[i])
@@ -326,16 +324,18 @@ def display_board():
         y = int(player2.y[i])
         matrix.draw_pixel(x, y, "2", pu)
 
-    print(matrix.field)
+    matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
 
-    # print("-------------------------------------------------------------------------\n")
-    # print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
-    # print("heading: " + ball.direction + ".\n")
-    # print("Player 1 is on position: ")
-    # print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player1.x, player1.y))
-    # print("Player 2 is on position: ")
-    # print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player2.x, player2.y))
-    # print("-------------------------------------------------------------------------\n")
+    # print(matrix.field)
+
+    print("-------------------------------------------------------------------------\n")
+    print("displaying board with ball at: (" + ball.x + ", " + ball.y + ")\n")
+    print("heading: " + ball.direction + ".\n")
+    print("Player 1 is on position: ")
+    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player1.x, player1.y))
+    print("Player 2 is on position: ")
+    print("(" + x + ", " + y + ")\n" for i, x, y in (range(4), player2.x, player2.y))
+    print("-------------------------------------------------------------------------\n")
 
     return
 

@@ -48,10 +48,6 @@ class Matrix:
     def field(self):
 
         field = np.chararray((self.y_Max+1, self.x_Max+1))
-        for i in range(len(field)):
-            for j in range(len(field[i])):
-                field[i][j] = " "
-        print(field.shape)
 
         return field
 
@@ -59,25 +55,14 @@ class Matrix:
     def draw_pixel(self, x, y, string, color):
         # https://www.hackster.io/idreams/getting-started-with-rgb-matrix-panel-adaa49
         # https://github.com/hzeller/rpi-rgb-led-matrix
-        # pins : [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
-        #        [  0,     1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]
+        # pins : [LAT, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2, clock]
+        #        [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,    12]
         self.field[y][x] = string
-        GPIO.output(self.pins[7], GPIO.HIGH)
-        GPIO.output(self.pins[10], GPIO.HIGH)
-        GPIO.output(self.pins[3], GPIO.HIGH)
-        GPIO.output(self.pins[4], GPIO.HIGH)
-        GPIO.output(self.pins[5], GPIO.HIGH)
-        GPIO.output(self.pins[6], GPIO.HIGH)
+        for p in self.pins:
+            GPIO.output(p, GPIO.HIGH)
 
-        GPIO.output(self.pins[1], GPIO.HIGH)
-        GPIO.output(self.pins[1], GPIO.LOW)
-
-        GPIO.output(self.pins[7], GPIO.LOW)
-        GPIO.output(self.pins[10], GPIO.LOW)
-        GPIO.output(self.pins[3], GPIO.LOW)
-        GPIO.output(self.pins[4], GPIO.LOW)
-        GPIO.output(self.pins[5], GPIO.LOW)
-        GPIO.output(self.pins[6], GPIO.LOW)
+        for p in self.pins:
+            GPIO.output(p, GPIO.LOW)
 
         return
 
