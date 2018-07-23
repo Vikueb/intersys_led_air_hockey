@@ -182,9 +182,12 @@ def take_and_process_picture():
         print("player 1 detected!")
         middle = cv2.moments(left_contours)
         print(middle)
+        if middle["m00"] == 0:
+            middle["m00"] = 1
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
         player1.set_position(x, y)
+        print(x, y)
         player1_reg = True
     else:
         print("player 1 not detected.")
@@ -193,9 +196,12 @@ def take_and_process_picture():
         print("player 2 detected!")
         middle = cv2.moments(right_contours)
         print(middle)
+        if middle["m00"] == 0:
+            middle["m00"] = 1
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
         player1.set_position(x, y)
+        print(x, y)
         player2_reg = True
     else:
         print("player 2 not detected.")
