@@ -25,7 +25,7 @@ class Ball:
         :return: void
         """
         if len(self.path) == 0:
-            return
+            return False
         point = self.path[0]
         self.x = point.x
         self.y = point.y
@@ -34,7 +34,7 @@ class Ball:
             if i != 0:
                 self.path[i-1] = int(self.path[i])
 
-        return
+        return True
 
 # ---------------------------------------------------------------------------------------------------------------- #
     def update_direction(self):
@@ -147,11 +147,10 @@ class Ball:
         if not the path is calculated again according to the current direction and position
         :return: void
         """
-        self.update_position()
-        self.update_direction()
-
-        if len(self.path) < 5:
-            self.calculate_path()
+        if self.update_position():
+            self.update_direction()
+            if len(self.path) < 5:
+                self.calculate_path()
 
         return
 
