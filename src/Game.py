@@ -134,7 +134,9 @@ def take_and_process_picture():
     x = int(0.5*x)
     max_y = img.size / img[0].size
     right = img[0:max_y, 0:x]
-    left = img[0:max_y, x:img[0].size/3]
+    left = img[0:max_y, x+1:img[0].size/3]
+    print("right", 0, max_y, 0, x)
+    print("left", 0, max_y, x+1, img[0].size/3)
 
     # Resizing the images and convert them to HSV values for better recognition
     left = cv2.resize(left, (32, 32))
@@ -174,11 +176,6 @@ def take_and_process_picture():
 
     _, left_contours, _ = cv2.findContours(left_hand, 1, 2)     # cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, 1, 2)   # cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
-    # left_contours = np.array(left_contours, dtype=np.uint8)
-    # left_contours = np.reshape(left_contours, [-1, 2])
-    # right_contours = np.array(right_contours, dtype=np.uint8)
-    # right_contours = np.reshape(right_contours, [-1, 2])
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
