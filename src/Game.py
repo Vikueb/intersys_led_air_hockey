@@ -44,7 +44,7 @@ def standby():
     """
     # just light the edges of the matrix
     # until start button is pushed
-    while not start_button.is_pressed():
+    while not start_button.is_pressed:
         print("standby\n")
         print("please press start to start the game!")
         matrix.draw_standby()
@@ -69,11 +69,11 @@ def loop():
     """
     while not globals()['wins']:
         # keep playing until exit button or stop button are pressed
-        if exit_button.is_pressed():
+        if exit_button.is_pressed:
             print("The Game is being turned off because you hit the exit button!\n")
             exit()
         else:
-            if start_button.is_pressed():
+            if start_button.is_pressed:
                 print("returning to standby mode because the stop button was pressed!\n")
                 return
 
@@ -375,7 +375,8 @@ def usage():
     print("\n")
     print("PROGRAMMING EXERCISE FOR INTERACTIVE SYSTEMS  \n")
     print("**********************************************\n")
-    print("    Copyright 2018 by Vincent Kuebler.        \n")
+    print("    Copyright 2018 by Vincent Kuebler         \n")
+    print("    and Kora Regitz.                          \n")
     print("    Students of Computer Science              \n")
     print("    Saarland University, Saarbruecken, Germany\n")
     print("    All rights reserved. Unauthorised usage,  \n")
@@ -396,7 +397,7 @@ The actual game starts here!
 usage()
 
 print("let the game begin!")
-while not exit_button.is_pressed():
+while not exit_button.is_pressed:
     standby()
     print("entering game mode now!")
     loop()
