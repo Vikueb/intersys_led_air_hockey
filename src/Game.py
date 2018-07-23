@@ -13,16 +13,16 @@ from time import sleep
 # pin setup for matrix
 # http://www.netzmafia.de/skripten/hardware/RasPi/RasPi_GPIO_C.html
 # print("setting up GPIO")
-GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BCM) is automatically set by gpiozero
 GPIO.setwarnings(False)
 #      [LAT, clock, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2]
-pins = [7,   11,    12, 15, 16, 18, 22, 23, 13, 26, 24, 21, 19]
+pins = [4,   17,    18, 22, 23, 24, 25, 11, 27,  7,  8,  9, 10]
 for p in pins:
     GPIO.setup(p, GPIO.OUT)
 
 # pin setup for buttons
-start_button = Button(38)
-exit_button = Button(40)
+start_button = Button(20)
+exit_button = Button(21)
 
 # globals
 matrix = Matrix(pins)
