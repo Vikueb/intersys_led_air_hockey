@@ -44,7 +44,7 @@ def standby():
     """
     # just light the edges of the matrix
     # until start button is pushed
-    c = 50
+    c = 60
     while not start_button.is_pressed:
         print("standby\n")
         print("please press start to start the game!")
@@ -127,6 +127,7 @@ def take_and_process_picture():
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
     img = np.frombuffer(stream.getvalue(), dtype=np.uint8).reshape(320, 640, 3)
+    np.fliplr(img)
 
     # split in picture into two sides
     x = img[0].size / 3
@@ -196,7 +197,7 @@ def take_and_process_picture():
             middle["m00"] = 1
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
-        player2.set_position(x, y)
+        player2.set_position(x+32, y)
         player2_reg = True
     else:
         print("player 2 not detected.")
