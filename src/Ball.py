@@ -30,7 +30,7 @@ class Ball:
 
         for i in range(len(self.path) - 1):
             if i != 0:
-                self.path[i-1] = self.path[i]
+                self.path[i-1] = int(self.path[i])
 
         return
 
@@ -80,12 +80,12 @@ class Ball:
             start = rand
 
         if start == 0:
-            self.x = 21
+            self.x = int(21)
             self.direction = random.randint(320, 400) % 360     # right
         else:
-            self.x = 42
+            self.x = int(42)
             self.direction = random.randint(140, 220)           # left
-        self.y = random.randint(31, 32)
+        self.y = int(random.randint(31, 32))
         self.path = []
 
         return
