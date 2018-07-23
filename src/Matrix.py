@@ -46,6 +46,7 @@ class Matrix:
         # https://github.com/hzeller/rpi-rgb-led-matrix
         # pins : [LAT, OE,  A,  B,  C,  D, R1, G1, B1, R2, G2, B2, clock]
         #        [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,    12]
+        print(len(self.field), x, len(self.field[0]), y)
         self.field[x][y] = string
 
         random.shuffle(self.pins)
