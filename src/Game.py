@@ -140,8 +140,8 @@ def take_and_process_picture():
     right = cv2.resize(right, (32, 32))
 
     # Defining the red color range and calculating if these values lie in that
-    red_lower = np.array([0, 0, 150])      # ([0.5*255, 0.6*255, 0.7*255], np.uint8)
-    red_upper = np.array([20, 20, 255])    # ([0.6*255, 0.7*255, 0.8*255], np.uint8)
+    red_lower = np.array([0.5*255, 0.6*255, 0.7*255], np.uint8)
+    red_upper = np.array([0.6*255, 0.7*255, 0.8*255], np.uint8)
     # get the mask
     left_mask = cv2.inRange(left, red_lower, red_upper)
     right_mask = cv2.inRange(right, red_lower, red_upper)
@@ -168,13 +168,8 @@ def take_and_process_picture():
     _, left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
     _, right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
 
-    print(cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE))
-
     _, left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
-    print(left_contours[0:5])
-    print(right_contours[0:5])
 
     # change center of player1 and player2
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
