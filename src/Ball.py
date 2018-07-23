@@ -24,6 +24,8 @@ class Ball:
         position is set to the next position of the path
         :return: void
         """
+        if len(self.path) == 0:
+            return
         point = self.path[0]
         self.x = point.x
         self.y = point.y
