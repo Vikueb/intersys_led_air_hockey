@@ -168,9 +168,6 @@ def take_and_process_picture():
     _, left_hand = cv2.threshold(left_hand, 150, 255, cv2.THRESH_BINARY)
     _, right_hand = cv2.threshold(right_hand, 150, 255, cv2.THRESH_BINARY)
 
-    print(left_hand)
-    print(right_hand)
-
     _, left_contours, _ = cv2.findContours(left_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     _, right_contours, _ = cv2.findContours(right_hand, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -181,7 +178,7 @@ def take_and_process_picture():
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
     if not left_contours == []:
         print("player 1 detected!")
-        middle = cv2.moments(left_contours[0])
+        middle = cv2.moments(left_contours)
         print(middle)
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
@@ -192,7 +189,7 @@ def take_and_process_picture():
 
     if not right_contours == []:
         print("player 2 detected!")
-        middle = cv2.moments(right_contours[0])
+        middle = cv2.moments(right_contours)
         print(middle)
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
