@@ -315,7 +315,7 @@ def display_board():
     matrix.draw_circle(31, 16, g)                     # green
     matrix.draw_pixel(31, 16, "+", g)                 # green
 
-    matrix.draw_pixel(ball.x, ball.y, "O", b)         # blue      ball
+    matrix.draw_pixel(ball.y, ball.x, "O", b)         # blue      ball
 
     for x, y in (player1.x, player1.y):               # orange    player 1
         matrix.draw_pixel(x, y, "1", o)               #
