@@ -133,8 +133,8 @@ def take_and_process_picture():
     x = x if x % 2 == 0 else x-1
     x = int(0.5*x)
     max_y = img.size / img[0].size
-    left = img[0:max_y, 0:x]
-    right = img[0:max_y, x:img[0].size/3]
+    right = img[0:max_y, 0:x]
+    left = img[0:max_y, x:img[0].size/3]
 
     # Resizing the images and convert them to HSV values for better recognition
     left = cv2.resize(left, (32, 32))
