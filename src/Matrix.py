@@ -48,6 +48,7 @@ class Matrix:
     def field(self):
 
         field = np.chararray((self.y_Max+1, self.x_Max+1))
+        print(field.shape)
 
         return field
 
