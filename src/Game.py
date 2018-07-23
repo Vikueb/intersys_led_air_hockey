@@ -178,7 +178,7 @@ def take_and_process_picture():
     # https://www.pyimagesearch.com/2016/02/01/opencv-center-of-contour/
     if not left_contours == []:
         print("player 1 detected!")
-        middle = cv2.moments(left_contours)
+        middle = cv2.moments(np.asarray(left_contours, dtype=np.uint8))
         print(middle)
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
@@ -189,7 +189,7 @@ def take_and_process_picture():
 
     if not right_contours == []:
         print("player 2 detected!")
-        middle = cv2.moments(right_contours)
+        middle = cv2.moments(np.asarray(right_contours, dtype=np.uint8))
         print(middle)
         x = int(middle["m10"] / middle["m00"])
         y = int(middle["m01"] / middle["m00"])
