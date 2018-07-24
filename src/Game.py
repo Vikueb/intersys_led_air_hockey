@@ -127,26 +127,26 @@ def take_and_process_picture():
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
     img = np.frombuffer(stream.getvalue(), dtype=np.uint8).reshape(320, 640, 3)
-    np.fliplr(img)
+    # np.fliplr(img)
 
     # split in picture into two sides
     x = img[0].size / 3
     x = x if x % 2 == 0 else x-1
     x = int(0.5*x)
     max_y = img.size / img[0].size
-    right = img[0:max_y, 0:x]
-    left = img[0:max_y, x+1:img[0].size/3]
+    left = img[0:max_y, 0:x]
+    right = img[0:max_y, x+1:img[0].size/3]
 
     # Resizing the images and convert them to HSV values for better recognition
     left = cv2.resize(left, (32, 32))
     right = cv2.resize(right, (32, 32))
 
-    # Defining the red color range and calculating if these values lie in that
-    # red_lower = np.array([120, 115, 110], np.uint8)
-    # red_upper = np.array([170, 175, 180], np.uint8)
-    # cause of light reasons it's easier to detect a light
-    red_lower = np.array([200, 200, 200], np.uint8)
-    red_upper = np.array([255, 255, 255], np.uint8)
+    # Defining the skin color range and calculating if these values lie in that
+    red_lower = np.array([120, 115, 110], np.uint8)
+    red_upper = np.array([170, 175, 180], np.uint8)
+    # because of light reasons it's easier to detect a light
+    # red_lower = np.array([200, 200, 200], np.uint8)
+    # red_upper = np.array([255, 255, 255], np.uint8)
     # get the mask
     left_mask = cv2.inRange(left, red_lower, red_upper)
     right_mask = cv2.inRange(right, red_lower, red_upper)
