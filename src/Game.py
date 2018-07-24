@@ -142,7 +142,7 @@ def take_and_process_picture():
     right = cv2.resize(right, (32, 32))
 
     # Defining the skin color range and calculating if these values lie in that
-    red_lower = np.array([170, 160, 160], np.uint8)
+    red_lower = np.array([160, 150, 140], np.uint8)
     red_upper = np.array([200, 190, 190], np.uint8)
     # because of light reasons it's easier to detect a light
     # red_lower = np.array([200, 200, 200], np.uint8)
@@ -321,14 +321,14 @@ def display_board():
 
     # print(matrix.field)
 
-    print("-------------------------------------------------------------------------\n")
+    print("---------------------------------------------------------------------\n")
     print("displaying board with ball at: (", ball.x, ",", ball.y, ")\n")
     print("heading: ", ball.direction, ".\n")
     print("Player 1 is on position: ")
     print("(", player1.x[0], ",", player1.y[0], ")\n")
     print("Player 2 is on position: ")
     print("(", player2.x[0], ",", player2.y[0], ")\n")
-    print("-------------------------------------------------------------------------\n")
+    print("---------------------------------------------------------------------\n")
 
     return
 
