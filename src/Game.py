@@ -119,10 +119,10 @@ def take_and_process_picture():
     # capture picture into stream
     stream = array.PiRGBArray(camera)
     camera.resolution = (640, 320)      # (x,y)
-    camera.start_preview()
-    sleep(0.5)
+    # camera.start_preview()
+    # sleep(0.5)
     camera.capture(stream, format="rgb", use_video_port=True)
-    camera.stop_preview()
+    # camera.stop_preview()
 
     # turn data into cv2 image
     # print(stream.array[0].size / 3, stream.array.size / stream.array[0].size)
