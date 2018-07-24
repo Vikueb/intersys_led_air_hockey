@@ -87,7 +87,7 @@ class Ball:
         else:
             self.x = int(42)
             self.direction = random.randint(140, 220)           # left
-        self.y = int(random.randint(31, 32))
+        self.y = int(random.randint(15, 16))
         self.path = []
 
         return
