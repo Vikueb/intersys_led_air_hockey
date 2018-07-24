@@ -323,19 +323,14 @@ def display_board():
 
     # print(matrix.field)
 
-    # print("---------------------------------------------------------------------")
-    # print("displaying board with ball at: (", ball.x, ",", ball.y, ")")
-    # print("heading: ", ball.direction, ".")
-    # print("Player 1 is on position: ")
-    # print("(", player1.x[0], ",", player1.y[0], ")")
-    # print("Player 2 is on position: ")
-    # print("(", player2.x[0], ",", player2.y[0], ")")
-    # print("---------------------------------------------------------------------")
-    print ----------------------------------
-    print ball at ball.x, ball.y into direction ball.direction
-    print player 1 is on (player1.x[0], player1.y[0])
-    print player 2 is on (player2.x[0], player2.x[0])
-    print ----------------------------------
+    print("---------------------------------------------------------------------")
+    print("displaying board with ball at: (", ball.x, ",", ball.y, ")")
+    print("heading: ", ball.direction, ".")
+    print("Player 1 is on position: ")
+    print("(", player1.x[0], ",", player1.y[0], ")")
+    print("Player 2 is on position: ")
+    print("(", player2.x[0], ",", player2.y[0], ")")
+    print("---------------------------------------------------------------------")
 
     return
 
