@@ -199,7 +199,7 @@ def take_and_process_picture():
             yt = player2.y[0]
             x = int(middle["m10"] / middle["m00"])
             y = int(middle["m01"] / middle["m00"])
-            player2.set_position(x if not x == 0 else xt, y if not y == 0 else yt)
+            player2.set_position(x + 32 if not x == 0 else xt, y if not y == 0 else yt)
             player2_reg = True
     else:
         print("player 2 not detected.")
